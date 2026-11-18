@@ -13,10 +13,11 @@ export const LoriaTest: React.FC = () => {
   const glasses = spring({frame: f - 120, fps, config: {damping: 12}});
   return (
     <AbsoluteFill style={{background: '#FFF6E5', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}}>
-      <Img src={staticFile('loria-original.jpg')} style={{height: 900}} />
+      <Img src={staticFile('loria-original.jpg')} style={{height: 760}} />
+      <Loria width={560} book={{left: 'ABC', right: 'Hello!'}} />
       <div style={{transform: `translateY(${hop}px)`}}>
         <Loria
-          width={672}
+          width={560}
           beakOpen={talk}
           blink={blink}
           wingR={flap}

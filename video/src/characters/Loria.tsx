@@ -16,7 +16,9 @@ import {C} from '../theme';
  *  - tail:      grados que mueve la cola
  *  - glasses / headphones / cap: accesorios encendidos o apagados
  *  - glassesDrop: 0 = gafas puestas, 1 = gafas arriba fuera del cuadro (para animar que se las pone)
- *  - showBook / showPencil: para quitar el libro o el lapiz si una escena lo pide
+ *  - book:      sin libro (por defecto) o {left, right} con el texto de cada pagina.
+ *               Ej: book={{}} = libro original "ABC / Bonjour"; book={{left: '1', right: 'Hello'}}
+ *  - showPencil: lapiz en el pico (apagado por defecto)
  */
 export type LoriaPose = {
   blink?: number;
@@ -31,7 +33,7 @@ export type LoriaPose = {
   glassesDrop?: number;
   headphones?: boolean;
   cap?: boolean;
-  showBook?: boolean;
+  book?: {left?: string; right?: string} | false;
   showPencil?: boolean;
   showShadow?: boolean;
 };
@@ -52,8 +54,8 @@ export const Loria: React.FC<LoriaPose & {width?: number; style?: React.CSSPrope
   glassesDrop = 0,
   headphones = false,
   cap = false,
-  showBook = true,
-  showPencil = true,
+  book = false,
+  showPencil = false,
   showShadow = true,
   width = 896,
   style,
@@ -166,23 +168,7 @@ export const Loria: React.FC<LoriaPose & {width?: number; style?: React.CSSPrope
 
       {/* ALA DERECHA (se puede aletear) */}
       <g transform={`rotate(${wingR} 548 712)`}>
-        <path
-          d="M528 700 C600 686 660 735 690 800 C718 860 745 905 752 958 C705 965 640 948 598 925 C552 898 520 858 512 800 C506 760 510 722 528 700 Z"
-          fill={C.green}
-          stroke={O}
-          strokeWidth={SW}
-          strokeLinejoin="round"
-        />
-        <path d="M560 740 C600 750 640 790 660 840" stroke={C.greenLight} strokeWidth={12} fill="none" strokeLinecap="round" opacity={0.8} />
-        <path
-          d="M590 870 C640 885 712 915 752 958 C700 966 640 950 592 925 C575 912 575 885 590 870 Z"
-          fill={`url(#${g('feather')})`}
-          stroke={O}
-          strokeWidth={SW}
-          strokeLinejoin="round"
-        />
-        <path d="M620 900 L700 935 M600 915 L660 945" stroke={O} strokeWidth={6} strokeLinecap="round" />
-        <path d="M600 820 C630 830 660 860 690 900" stroke={C.greenDark} strokeWidth={7} fill="none" strokeLinecap="round" />
+        <WingShape g={g} />
       </g>
 
       {/* CABEZA (todo lo de arriba gira junto) */}
@@ -279,29 +265,37 @@ export const Loria: React.FC<LoriaPose & {width?: number; style?: React.CSSPrope
         )}
       </g>
 
+
+      {/* ALA IZQUIERDA: con libro, o un ala normal (espejo de la derecha) */}
+      {book ? (
+        <g transform={`rotate(${wingL} 285 760)`}>
+          <path
+            d="M300 720 C262 735 244 780 236 830 C228 870 214 900 190 915 L230 930 C268 905 292 860 300 810 Z"
+            fill={C.green}
+            stroke={O}
+            strokeWidth={SW}
+            strokeLinejoin="round"
+          />
+          <Book left={book.left ?? 'ABC'} right={book.right ?? 'Bonjour'} />
+          {/* "mano" de plumas azules agarrando el libro */}
+          <path
+            d="M246 800 C278 840 262 900 222 922 C192 936 160 930 138 916 C108 900 104 868 126 852 C146 840 168 850 180 866 C190 842 214 822 246 800 Z"
+            fill={`url(#${g('feather')})`}
+            stroke={O}
+            strokeWidth={SW}
+            strokeLinejoin="round"
+          />
+          <path d="M170 880 L150 900 M200 878 L190 912 M228 862 L226 900" stroke={O} strokeWidth={6} strokeLinecap="round" />
+        </g>
+      ) : (
+        <g transform="translate(888 0) scale(-1 1)">
+          <g transform={`rotate(${-wingL} 548 712)`}>
+            <WingShape g={g} />
+          </g>
+        </g>
+      )}
       {/* MONO CON BANDERAS */}
       <Bow g={g} />
-
-      {/* ALA IZQUIERDA CON EL LIBRO */}
-      <g transform={`rotate(${wingL} 285 760)`}>
-        <path
-          d="M300 720 C262 735 244 780 236 830 C228 870 214 900 190 915 L230 930 C268 905 292 860 300 810 Z"
-          fill={C.green}
-          stroke={O}
-          strokeWidth={SW}
-          strokeLinejoin="round"
-        />
-        {showBook && <Book />}
-        {/* "mano" de plumas azules agarrando el libro */}
-        <path
-          d="M246 800 C278 840 262 900 222 922 C192 936 160 930 138 916 C108 900 104 868 126 852 C146 840 168 850 180 866 C190 842 214 822 246 800 Z"
-          fill={`url(#${g('feather')})`}
-          stroke={O}
-          strokeWidth={SW}
-          strokeLinejoin="round"
-        />
-        <path d="M170 880 L150 900 M200 878 L190 912 M228 862 L226 900" stroke={O} strokeWidth={6} strokeLinecap="round" />
-      </g>
     </svg>
   );
 };
@@ -333,7 +327,30 @@ const Pencil: React.FC = () => (
   </g>
 );
 
-const Book: React.FC = () => (
+const WingShape: React.FC<{g: (n: string) => string}> = ({g}) => (
+  <g>
+    <path
+      d="M528 700 C600 686 660 735 690 800 C718 860 745 905 752 958 C705 965 640 948 598 925 C552 898 520 858 512 800 C506 760 510 722 528 700 Z"
+      fill={C.green}
+      stroke={O}
+      strokeWidth={SW}
+      strokeLinejoin="round"
+    />
+    <path d="M560 740 C600 750 640 790 660 840" stroke={C.greenLight} strokeWidth={12} fill="none" strokeLinecap="round" opacity={0.8} />
+    <path
+      d="M590 870 C640 885 712 915 752 958 C700 966 640 950 592 925 C575 912 575 885 590 870 Z"
+      fill={`url(#${g('feather')})`}
+      stroke={O}
+      strokeWidth={SW}
+      strokeLinejoin="round"
+    />
+    <path d="M620 900 L700 935 M600 915 L660 945" stroke={O} strokeWidth={6} strokeLinecap="round" />
+    <path d="M600 820 C630 830 660 860 690 900" stroke={C.greenDark} strokeWidth={7} fill="none" strokeLinecap="round" />
+      </g>
+);
+
+/** Libro: "left" y "right" son los textos de cada pagina. "ABC" pinta las letras de colores. */
+const Book: React.FC<{left: string; right: string}> = ({left, right}) => (
   <g>
     {/* tapa roja */}
     <path d="M38 708 L150 716 L258 676 L270 830 L158 872 L62 860 Z" fill="#B8332B" stroke={O} strokeWidth={10} strokeLinejoin="round" />
@@ -341,15 +358,23 @@ const Book: React.FC = () => (
     <path d="M52 700 C90 696 128 704 152 724 L160 852 C130 838 100 836 72 842 Z" fill={C.cream} stroke={O} strokeWidth={9} strokeLinejoin="round" />
     {/* pagina derecha */}
     <path d="M152 724 C180 700 220 684 248 682 L258 816 C226 822 190 834 160 852 Z" fill="#FBF6EA" stroke={O} strokeWidth={9} strokeLinejoin="round" />
+    {left === 'ABC' ? (
+      <g>
     <text x={78} y={770} fontFamily="Arial Black, Arial, sans-serif" fontWeight={900} fontSize={42} fill="#E2342A" stroke="#7a1a12" strokeWidth={1.5}>
-      A
-    </text>
-    <text x={116} y={786} fontFamily="Arial Black, Arial, sans-serif" fontWeight={900} fontSize={42} fill="#4CA63A" stroke="#1f4d18" strokeWidth={1.5}>
-      B
-    </text>
-    <text x={100} y={830} fontFamily="Arial Black, Arial, sans-serif" fontWeight={900} fontSize={42} fill="#2F7CC0" stroke="#173e63" strokeWidth={1.5}>
-      C
-    </text>
+        A
+      </text>
+      <text x={116} y={786} fontFamily="Arial Black, Arial, sans-serif" fontWeight={900} fontSize={42} fill="#4CA63A" stroke="#1f4d18" strokeWidth={1.5}>
+        B
+      </text>
+      <text x={100} y={830} fontFamily="Arial Black, Arial, sans-serif" fontWeight={900} fontSize={42} fill="#2F7CC0" stroke="#173e63" strokeWidth={1.5}>
+        C
+      </text>
+      </g>
+    ) : (
+      <text x={106} y={790} textAnchor="middle" fontFamily="Arial Black, Arial, sans-serif" fontWeight={900} fontSize={Math.min(40, 150 / Math.max(1, left.length) * 1.6)} fill="#E2342A" transform="rotate(8 106 790)">
+        {left}
+      </text>
+    )}
     <text
       x={164}
       y={782}
@@ -358,8 +383,10 @@ const Book: React.FC = () => (
       fontSize={22}
       fill={O}
       transform="rotate(-17 164 782)"
+      textLength={right.length > 7 ? 86 : undefined}
+      lengthAdjust="spacingAndGlyphs"
     >
-      Bonjour
+      {right}
     </text>
   </g>
 );
