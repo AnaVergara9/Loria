@@ -2,4 +2,8 @@ python-telegram-bot
 python-dotenv
 faster-whisper
 google-genai
-av
+av<19
+torch
+transformers
+librosa
+soundfile
