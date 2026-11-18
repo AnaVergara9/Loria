@@ -24,7 +24,7 @@ export const Phone: React.FC<{
   scroll?: number;
   style?: React.CSSProperties;
 }> = ({msgs, width = 560, rotY = -14, rotX = 6, rotZ = 0, scroll = 0, style}) => {
-  const h = width * 2.05;
+  const h = width * 1.72;
   return (
     <div style={{perspective: 1800, ...style}}>
       <div
@@ -106,8 +106,8 @@ export const Phone: React.FC<{
                 flex: 1,
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'flex-end',
-                padding: width * 0.035,
+                justifyContent: 'flex-start',
+                padding: width * 0.04,
                 gap: width * 0.025,
                 transform: `translateY(${-scroll}px)`,
               }}
@@ -139,7 +139,7 @@ const Bubble: React.FC<{m: Msg; w: number}> = ({m, w}) => {
   const p = spring({frame: f - s(m.at), fps, config: {damping: 12, stiffness: 200}});
   if (f < s(m.at)) return null;
   const me = m.from === 'me';
-  const fs = w * 0.052;
+  const fs = w * 0.066;
   const base: React.CSSProperties = {
     alignSelf: me ? 'flex-end' : 'flex-start',
     maxWidth: '86%',

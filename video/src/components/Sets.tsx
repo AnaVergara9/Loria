@@ -138,3 +138,93 @@ export const CallTile: React.FC<{x: number; y: number; w: number; h: number; nam
     <div style={{position: 'absolute', left: 16, bottom: 14, fontFamily: BODY, fontWeight: 800, fontSize: 30, color: '#fff', background: 'rgba(0,0,0,0.5)', borderRadius: 10, padding: '2px 14px'}}>{name}</div>
   </div>
 );
+
+/** Bus por dentro: ventanas con ciudad que pasa y tubos para agarrarse. */
+export const BusBG: React.FC = () => {
+  const f = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{background: '#F2E2B8'}}>
+      {[0, 1, 2].map((i) => (
+        <div key={i} style={{position: 'absolute', left: 80 + i * 620, top: 120, width: 520, height: 380, border: `12px solid ${O}`, borderRadius: 30, overflow: 'hidden', background: '#9BD0F2'}}>
+          {new Array(8).fill(0).map((_, k) => (
+            <div key={k} style={{position: 'absolute', bottom: 0, left: ((k * 160 - f * 22 - i * 520) % 1280) + 640 - 640, width: 110, height: 120 + ((k * 53) % 150), background: ['#7C8AA0', '#64738C', '#8592A8'][k % 3], border: `5px solid ${O}`}} />
+          ))}
+        </div>
+      ))}
+      <div style={{position: 'absolute', left: 0, right: 0, top: 40, height: 22, background: '#C9C9CF', border: `6px solid ${O}`}} />
+      <div style={{position: 'absolute', left: 0, right: 0, bottom: 0, height: 300, background: 'linear-gradient(180deg, #5B6B7A, #3F4B57)', borderTop: `10px solid ${O}`}} />
+      {[300, 1600].map((x) => (
+        <div key={x} style={{position: 'absolute', left: x, top: 40, width: 24, height: 1000, background: '#E3C14A', border: `6px solid ${O}`}} />
+      ))}
+    </AbsoluteFill>
+  );
+};
+
+/** Cocina: azulejos, alacenas y estufa con olla humeante. */
+export const KitchenBG: React.FC = () => {
+  const f = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{background: '#FFF6E0'}}>
+      <AbsoluteFill style={{top: 420, background: 'repeating-linear-gradient(90deg, #FFFFFF 0 78px, #DCEFD0 78px 80px), #fff', opacity: 0.9}} />
+      <AbsoluteFill style={{top: 420, background: 'repeating-linear-gradient(0deg, transparent 0 78px, #DCEFD0 78px 80px)'}} />
+      {[0, 1, 2, 3].map((i) => (
+        <div key={i} style={{position: 'absolute', left: 120 + i * 440, top: 60, width: 380, height: 300, background: `linear-gradient(180deg, ${C.green}, ${C.greenDark})`, border: `10px solid ${O}`, borderRadius: 16}}>
+          <div style={{position: 'absolute', left: '46%', top: '45%', width: 30, height: 30, borderRadius: '50%', background: C.yellow, border: `6px solid ${O}`}} />
+        </div>
+      ))}
+      <div style={{position: 'absolute', left: 0, right: 0, bottom: 0, height: 330, background: 'linear-gradient(180deg, #E9A35A, #C47A36)', borderTop: `12px solid ${O}`}} />
+      <div style={{position: 'absolute', left: 1300, bottom: 330, width: 260, height: 150, background: '#9AA3AE', border: `10px solid ${O}`, borderRadius: '10px 10px 40px 40px'}} />
+      {[0, 1, 2].map((i) => (
+        <div key={i} style={{position: 'absolute', left: 1360 + i * 55, bottom: 490 + ((f * 3 + i * 30) % 90), width: 30, height: 60, borderRadius: 20, background: 'rgba(255,255,255,0.8)', opacity: 1 - ((f * 3 + i * 30) % 90) / 90}} />
+      ))}
+    </AbsoluteFill>
+  );
+};
+
+/** Cuarto de noche: ventana con luna, cama y lampara. */
+export const BedroomBG: React.FC = () => (
+  <AbsoluteFill style={{background: 'linear-gradient(180deg, #2B3A6B, #1C2547)'}}>
+    <div style={{position: 'absolute', left: 1250, top: 100, width: 480, height: 380, background: '#0F173A', border: `12px solid ${O}`, borderRadius: 14, overflow: 'hidden'}}>
+      <div style={{position: 'absolute', left: 280, top: 60, width: 120, height: 120, borderRadius: '50%', background: '#FFF3B0', boxShadow: '0 0 60px #FFF3B0'}} />
+      {[[60, 80], [160, 220], [380, 280], [90, 300], [220, 60]].map(([x, y], i) => (
+        <div key={i} style={{position: 'absolute', left: x, top: y, color: '#FFF3B0', fontSize: 30}}>✦</div>
+      ))}
+    </div>
+    <div style={{position: 'absolute', left: 180, top: 300, width: 160, height: 120, background: C.yellow, border: `9px solid ${O}`, borderRadius: '40px 40px 10px 10px', boxShadow: '0 0 120px 60px rgba(255,220,120,0.35)'}} />
+  </AbsoluteFill>
+);
+
+/** Cama (va delante: tapa a Camila de la cintura para abajo). */
+export const Bed: React.FC = () => (
+  <svg width="1920" height="1080" style={{position: 'absolute'}}>
+    <rect x={380} y={560} width={1300} height={120} rx={30} fill="#F5F0E6" stroke={O} strokeWidth={10} />
+    <path d="M300 700 Q1000 620 1760 700 L1760 1090 L300 1090 Z" fill="#E07A5F" stroke={O} strokeWidth={12} />
+    <path d="M300 760 Q1000 690 1760 760" stroke="#F4A88F" strokeWidth={14} fill="none" />
+    <rect x={260} y={520} width={60} height={600} rx={20} fill="#8A5F38" stroke={O} strokeWidth={10} />
+  </svg>
+);
+
+/**
+ * Ondas de sonido que viajan de (x1,y1) a (x2,y2): la nota de voz llegando a Loria.
+ */
+export const SoundWaves: React.FC<{x1: number; y1: number; x2: number; y2: number; color?: string; on?: boolean}> = ({x1, y1, x2, y2, color = C.yellow, on = true}) => {
+  const f = useCurrentFrame();
+  if (!on) return null;
+  const ang = (Math.atan2(y2 - y1, x2 - x1) * 180) / Math.PI;
+  return (
+    <svg width="1920" height="1080" style={{position: 'absolute', left: 0, top: 0, pointerEvents: 'none'}}>
+      {new Array(5).fill(0).map((_, i) => {
+        const p = ((f / 30 + i * 0.2) % 1);
+        const x = x1 + (x2 - x1) * p;
+        const y = y1 + (y2 - y1) * p;
+        const r = 30 + p * 40;
+        return (
+          <g key={i} transform={`translate(${x} ${y}) rotate(${ang})`} opacity={Math.sin(p * Math.PI)}>
+            <path d={`M0 ${-r} A ${r} ${r} 0 0 1 0 ${r}`} stroke={O} strokeWidth={20} fill="none" strokeLinecap="round" />
+            <path d={`M0 ${-r} A ${r} ${r} 0 0 1 0 ${r}`} stroke={color} strokeWidth={10} fill="none" strokeLinecap="round" />
+          </g>
+        );
+      })}
+    </svg>
+  );
+};
