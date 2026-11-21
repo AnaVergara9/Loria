@@ -14,7 +14,7 @@ import {
 import {BODY, HAND, TITLE} from '../fonts';
 import dialogue from '../dialogue.json';
 import {C} from '../theme';
-import {s} from '../timeline';
+import {s, SCENES} from '../timeline';
 
 // ---------- LETRAS ----------
 export {TITLE, BODY, HAND};
@@ -145,10 +145,36 @@ const Subtitle: React.FC<{who: string; text: string}> = ({who, text}) => {
   );
 };
 
-/** Musica de fondo: cualquier archivo dentro de public/music/ suena en todo el video. */
-export const Music: React.FC<{volume?: number}> = ({volume = 0.22}) => {
-  const file = findFile('music/');
-  return file ? <Audio src={file.src} volume={volume} loop /> : null;
+/**
+ * Musica de fondo: el archivo de audio que este dentro de public/music/ suena en todo el video.
+ * Baja sola de volumen (a "duck") mientras alguien habla, para que se entiendan las voces.
+ */
+export const Music: React.FC<{volume?: number; duck?: number}> = ({volume = 0.3, duck = 0.35}) => {
+  let file;
+  try {
+    file = getStaticFiles().find((f) => f.name.startsWith('music/') && /\.(mp3|wav|m4a|aac|ogg)$/i.test(f.name));
+  } catch {
+    file = undefined;
+  }
+  if (!file) return null;
+  // momentos (en segundos del video completo) en que alguien habla
+  const starts: Record<string, number> = {};
+  let acc = 0;
+  for (const sc of SCENES) {
+    starts[sc.id] = acc;
+    acc += sc.dur;
+  }
+  const talking = LINES.map((l) => [starts[l.scene] + l.at, starts[l.scene] + l.at + l.dur] as const);
+  const vol = (f: number) => {
+    const t = f / 30;
+    let k = 0;
+    for (const [a, b] of talking) {
+      const v = Math.min(1, Math.max(0, Math.min((t - a + 0.2) / 0.2, (b - t + 0.3) / 0.3)));
+      k = Math.max(k, v);
+    }
+    return volume * (1 - (1 - duck) * k);
+  };
+  return <Audio src={file.src} volume={vol} />;
 };
 
 // ---------- CAMARA ----------

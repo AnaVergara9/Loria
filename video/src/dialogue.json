@@ -1,58 +1,395 @@
 {
   "_ayuda": "Todos los dialogos del video. 'at' = segundo dentro de la escena en que empieza, 'dur' = cuantos segundos dura en pantalla. 'voz' = quien lo graba (A = voz de Loria, B = voz de Camila). El archivo de audio se busca en public/voces/<id>.mp3 (o .wav / .m4a).",
   "lines": [
-    {"id": "e00_01", "scene": "E00", "who": "LORIA", "voz": "A", "at": 0.2, "dur": 2.6, "text": "¿Hablas inglés? ¿Sí? …A ver.", "note": "Pícara, como retando"},
-
-    {"id": "e01_01", "scene": "E01", "who": "JEFE", "voz": "A", "at": 0.6, "dur": 1.6, "text": "How old are you?", "note": "Voz grave y seria"},
-    {"id": "e01_02", "scene": "E01", "who": "CAMILA", "voz": "B", "at": 2.4, "dur": 1.8, "text": "I have 20 years!", "note": "Muy segura, orgullosa"},
-
-    {"id": "e02_01", "scene": "E02", "who": "CAMILA", "voz": "B", "at": 0.3, "dur": 2.0, "text": "Je suis… ¿un croissant?", "note": "Dudando"},
-    {"id": "e02_02", "scene": "E02", "who": "CAMILA", "voz": "B", "at": 2.7, "dur": 1.8, "text": "Where is the baño?", "note": "Apurada"},
-    {"id": "e02_03", "scene": "E02", "who": "COLEGA", "voz": "A", "at": 5.1, "dur": 1.6, "text": "Any questions, Camila?", "note": "Voz de oficina, neutra"},
-
-    {"id": "e03_01", "scene": "E03", "who": "LORIA", "voz": "A", "at": 0.4, "dur": 2.0, "text": "¿Te da pena hablar en inglés?", "note": "Locutora de comercial, dramática"},
-    {"id": "e03_02", "scene": "E03", "who": "LORIA", "voz": "A", "at": 2.6, "dur": 2.0, "text": "¿Te quedas callada en francés?", "note": "Igual, más intensa"},
-    {"id": "e03_03", "scene": "E03", "who": "LORIA", "voz": "A", "at": 4.8, "dur": 2.0, "text": "¿PENA DE HABLAR?", "note": "Gritado, eco"},
-
-    {"id": "e04_01", "scene": "E04", "who": "LORIA", "voz": "A", "at": 1.4, "dur": 2.6, "text": "¡No sufras más! ¡Llegó Loria!", "note": "Presentadora de teletienda, muy energética"},
-
-    {"id": "e05_01", "scene": "E05", "who": "CAMILA", "voz": "B", "at": 0.8, "dur": 1.8, "text": "I have 20 years…", "note": "Tímida, bajito"},
-    {"id": "e05_02", "scene": "E05", "who": "LORIA", "voz": "A", "at": 2.8, "dur": 2.4, "text": "¡I have 20 years! ¡I have 20 years!", "note": "Como loro, chillón y feliz"},
-    {"id": "e05_03", "scene": "E05", "who": "LORIA", "voz": "A", "at": 8.0, "dur": 5.4, "text": "Perdón. Se dice «I am 20 years old». En inglés la edad va con «to be», no con «tener».", "note": "Ya con gafas: calmada, profesora amable"},
-
-    {"id": "e06_01", "scene": "E06", "who": "LORIA", "voz": "A", "at": 0.3, "dur": 3.8, "text": "¡Escríbele en inglés o en francés, y Loria te corrige y te explica en español!", "note": "Rápido, vendedora"},
-
-    {"id": "e07_01", "scene": "E07", "who": "LORIA", "voz": "A", "at": 0.5, "dur": 2.4, "text": "¡PERO ESPERA, HAY MÁS!", "note": "Gritando a cámara"},
-
-    {"id": "e08_01", "scene": "E08", "who": "LORIA", "voz": "A", "at": 0.3, "dur": 2.2, "text": "¿No quieres escribir? ¡Háblale!", "note": "Energética"},
-    {"id": "e08_02", "scene": "E08", "who": "LORIA", "voz": "A", "at": 2.8, "dur": 3.2, "text": "En el bus, en la cocina… ¡o en pijama!", "note": "Una palabra por cada lugar"},
-    {"id": "e08_03", "scene": "E08", "who": "CAMILA", "voz": "B", "at": 7.0, "dur": 2.0, "text": "I have tree brothers.", "note": "Grabando nota de voz, tranquila"},
-    {"id": "e08_04", "scene": "E08", "who": "LORIA", "voz": "A", "at": 10.6, "dur": 3.0, "text": "¡Three! Con la lengua entre los dientes.", "note": "Divertida, mostrando"},
-    {"id": "e08_05", "scene": "E08", "who": "CAMILA", "voz": "B", "at": 15.0, "dur": 2.0, "text": "Yesterday I eat pizza.", "note": "Medio dormida, en la cama"},
-    {"id": "e08_06", "scene": "E08", "who": "LORIA", "voz": "A", "at": 17.2, "dur": 1.5, "text": "¡Pizza! ¡Pizza!", "note": "Como loro, emocionada"},
-    {"id": "e08_07", "scene": "E08", "who": "LORIA", "voz": "A", "at": 19.6, "dur": 2.6, "text": "¡Casi! Se dice «I ate pizza».", "note": "Con gafas, calmada"},
-
-    {"id": "e09_01", "scene": "E09", "who": "LORIA", "voz": "A", "at": 1.0, "dur": 2.8, "text": "Un momento… ¿y para los más pequeños?", "note": "Curiosa, misteriosa"},
-
-    {"id": "e10_01", "scene": "E10", "who": "NIÑO", "voz": "B", "at": 6.5, "dur": 1.2, "text": "Apple!", "note": "Voz de niño, feliz"},
-    {"id": "e10_02", "scene": "E10", "who": "LORIA BEBÉ", "voz": "A", "at": 8.0, "dur": 2.4, "text": "¡Muy bien! ¡Ganaste una estrella!", "note": "Vocecita aguda de pollito"},
-    {"id": "e10_03", "scene": "E10", "who": "NIÑO", "voz": "B", "at": 12.0, "dur": 1.2, "text": "Le chat!", "note": "Voz de niño, orgulloso"},
-    {"id": "e10_04", "scene": "E10", "who": "NIÑO", "voz": "B", "at": 16.0, "dur": 1.2, "text": "Thank you!", "note": "Voz de niño, gritando de alegría"},
-
-    {"id": "e11_01", "scene": "E11", "who": "LORIA", "voz": "A", "at": 0.8, "dur": 2.4, "text": "¿Quieres conversar?", "note": "Al ritmo, como presentadora"},
-    {"id": "e11_02", "scene": "E11", "who": "LORIA", "voz": "A", "at": 4.2, "dur": 2.4, "text": "¿Hacer ejercicios?", "note": ""},
-    {"id": "e11_03", "scene": "E11", "who": "LORIA", "voz": "A", "at": 7.6, "dur": 2.4, "text": "¿Corregir un texto?", "note": ""},
-    {"id": "e11_04", "scene": "E11", "who": "LORIA", "voz": "A", "at": 11.0, "dur": 2.4, "text": "¡Tú eliges!", "note": "Remate, con fuerza"},
-
-    {"id": "e12_01", "scene": "E12", "who": "ANDRÉS, 34", "voz": "B", "at": 0.8, "dur": 3.6, "text": "¡Ahora pido mi croissant en París sin pena!", "note": "Voz de hombre, testimonial de tele"},
-    {"id": "e12_02", "scene": "E12", "who": "DOÑA MARTA, 60", "voz": "B", "at": 6.8, "dur": 3.2, "text": "¡Practico inglés con mi nieto!", "note": "Voz de abuelita feliz"},
-    {"id": "e12_03", "scene": "E12", "who": "CAMILA", "voz": "B", "at": 12.4, "dur": 4.8, "text": "¡Conseguí el trabajo! And yes… I am 20 years old!", "note": "Feliz, segura, con orgullo"},
-
-    {"id": "e13_01", "scene": "E13", "who": "LORIA", "voz": "A", "at": 0.3, "dur": 3.6, "text": "¿Y cuánto cuesta? ¡Nada! ¡Es totalmente gratis!", "note": "Teletienda a tope"},
-    {"id": "e13_02", "scene": "E13", "who": "LORIA", "voz": "A", "at": 4.3, "dur": 3.4, "text": "¡Búscala en Telegram: arroba loriaabot!", "note": "Clara, deletreando un poco"},
-
-    {"id": "e14_01", "scene": "E14", "who": "LORIA", "voz": "A", "at": 0.3, "dur": 2.6, "text": "¡I am 20 years old! ¡I am 20 years old!", "note": "Como loro, emocionada"},
-    {"id": "e14_02", "scene": "E14", "who": "CAMILA", "voz": "B", "at": 3.1, "dur": 2.3, "text": "Loria… tú no tienes 20 años.", "note": "Seca, divertida"},
-    {"id": "e14_03", "scene": "E14", "who": "LORIA", "voz": "A", "at": 6.2, "dur": 3.6, "text": "Cierto. Tengo dos semanas. Te espero en Telegram.", "note": "Con gafas, calmada y coqueta"}
+    {
+      "id": "e00_01",
+      "scene": "E00",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 0.2,
+      "dur": 1.9,
+      "text": "¿Hablas inglés? ¿Sí? …A ver.",
+      "note": "Pícara, como retando"
+    },
+    {
+      "id": "e01_01",
+      "scene": "E01",
+      "who": "JEFE",
+      "voz": "A",
+      "at": 0.6,
+      "dur": 1.66,
+      "text": "How old are you?",
+      "note": "Voz grave y seria"
+    },
+    {
+      "id": "e01_02",
+      "scene": "E01",
+      "who": "CAMILA",
+      "voz": "B",
+      "at": 2.4,
+      "dur": 1.56,
+      "text": "I have 20 years!",
+      "note": "Muy segura, orgullosa"
+    },
+    {
+      "id": "e02_01",
+      "scene": "E02",
+      "who": "CAMILA",
+      "voz": "B",
+      "at": 0.3,
+      "dur": 1.72,
+      "text": "Je suis… ¿un croissant?",
+      "note": "Dudando"
+    },
+    {
+      "id": "e02_02",
+      "scene": "E02",
+      "who": "CAMILA",
+      "voz": "B",
+      "at": 2.7,
+      "dur": 1.88,
+      "text": "Where is the baño?",
+      "note": "Apurada"
+    },
+    {
+      "id": "e02_03",
+      "scene": "E02",
+      "who": "COLEGA",
+      "voz": "A",
+      "at": 5.1,
+      "dur": 1.83,
+      "text": "Any questions, Camila?",
+      "note": "Voz de oficina, neutra"
+    },
+    {
+      "id": "e03_01",
+      "scene": "E03",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 0.4,
+      "dur": 1.94,
+      "text": "¿Te da pena hablar en inglés?",
+      "note": "Locutora de comercial, dramática"
+    },
+    {
+      "id": "e03_02",
+      "scene": "E03",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 2.6,
+      "dur": 2.0,
+      "text": "¿Te quedas callada en francés?",
+      "note": "Igual, más intensa"
+    },
+    {
+      "id": "e03_03",
+      "scene": "E03",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 4.8,
+      "dur": 1.2,
+      "text": "¿PENA DE HABLAR?",
+      "note": "Gritado, eco"
+    },
+    {
+      "id": "e04_01",
+      "scene": "E04",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 1.4,
+      "dur": 1.93,
+      "text": "¡No sufras más! ¡Llegó Loria!",
+      "note": "Presentadora de teletienda, muy energética"
+    },
+    {
+      "id": "e05_01",
+      "scene": "E05",
+      "who": "CAMILA",
+      "voz": "B",
+      "at": 0.8,
+      "dur": 1.7,
+      "text": "I have 20 years…",
+      "note": "Tímida, bajito"
+    },
+    {
+      "id": "e05_02",
+      "scene": "E05",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 2.8,
+      "dur": 2.16,
+      "text": "¡I have 20 years! ¡I have 20 years!",
+      "note": "Como loro, chillón y feliz"
+    },
+    {
+      "id": "e05_03",
+      "scene": "E05",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 8.0,
+      "dur": 6.57,
+      "text": "Perdón. Se dice «I am 20 years old». En inglés la edad va con «to be», no con «tener».",
+      "note": "Ya con gafas: calmada, profesora amable"
+    },
+    {
+      "id": "e06_01",
+      "scene": "E06",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 0.3,
+      "dur": 3.99,
+      "text": "¡Escríbele en inglés o en francés, y Loria te corrige y te explica en español!",
+      "note": "Rápido, vendedora"
+    },
+    {
+      "id": "e07_01",
+      "scene": "E07",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 0.5,
+      "dur": 1.7,
+      "text": "¡PERO ESPERA, HAY MÁS!",
+      "note": "Gritando a cámara"
+    },
+    {
+      "id": "e08_01",
+      "scene": "E08",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 0.3,
+      "dur": 1.97,
+      "text": "¿No quieres escribir? ¡Háblale!",
+      "note": "Energética"
+    },
+    {
+      "id": "e08_02",
+      "scene": "E08",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 2.8,
+      "dur": 2.37,
+      "text": "En el bus, en la cocina… ¡o en pijama!",
+      "note": "Una palabra por cada lugar"
+    },
+    {
+      "id": "e08_03",
+      "scene": "E08",
+      "who": "CAMILA",
+      "voz": "B",
+      "at": 7.0,
+      "dur": 1.61,
+      "text": "I have tree brothers.",
+      "note": "Grabando nota de voz, tranquila"
+    },
+    {
+      "id": "e08_04",
+      "scene": "E08",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 10.6,
+      "dur": 2.73,
+      "text": "¡Three! Con la lengua entre los dientes.",
+      "note": "Divertida, mostrando"
+    },
+    {
+      "id": "e08_05",
+      "scene": "E08",
+      "who": "CAMILA",
+      "voz": "B",
+      "at": 15.0,
+      "dur": 1.95,
+      "text": "Yesterday I eat pizza.",
+      "note": "Medio dormida, en la cama"
+    },
+    {
+      "id": "e08_06",
+      "scene": "E08",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 17.2,
+      "dur": 1.2,
+      "text": "¡Pizza! ¡Pizza!",
+      "note": "Como loro, emocionada"
+    },
+    {
+      "id": "e08_07",
+      "scene": "E08",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 19.6,
+      "dur": 2.58,
+      "text": "¡Casi! Se dice «I ate pizza».",
+      "note": "Con gafas, calmada"
+    },
+    {
+      "id": "e09_01",
+      "scene": "E09",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 1.0,
+      "dur": 2.36,
+      "text": "Un momento… ¿y para los más pequeños?",
+      "note": "Curiosa, misteriosa"
+    },
+    {
+      "id": "e10_01",
+      "scene": "E10",
+      "who": "NIÑO",
+      "voz": "B",
+      "at": 6.5,
+      "dur": 1.2,
+      "text": "Apple!",
+      "note": "Voz de niño, feliz"
+    },
+    {
+      "id": "e10_02",
+      "scene": "E10",
+      "who": "LORIA BEBÉ",
+      "voz": "A",
+      "at": 8.0,
+      "dur": 2.09,
+      "text": "¡Muy bien! ¡Ganaste una estrella!",
+      "note": "Vocecita aguda de pollito"
+    },
+    {
+      "id": "e10_03",
+      "scene": "E10",
+      "who": "NIÑO",
+      "voz": "B",
+      "at": 12.0,
+      "dur": 1.2,
+      "text": "Le chat!",
+      "note": "Voz de niño, orgulloso"
+    },
+    {
+      "id": "e10_04",
+      "scene": "E10",
+      "who": "NIÑO",
+      "voz": "B",
+      "at": 16.0,
+      "dur": 1.22,
+      "text": "Thank you!",
+      "note": "Voz de niño, gritando de alegría"
+    },
+    {
+      "id": "e11_01",
+      "scene": "E11",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 0.8,
+      "dur": 1.43,
+      "text": "¿Quieres conversar?",
+      "note": "Al ritmo, como presentadora"
+    },
+    {
+      "id": "e11_02",
+      "scene": "E11",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 4.2,
+      "dur": 1.5,
+      "text": "¿Hacer ejercicios?",
+      "note": ""
+    },
+    {
+      "id": "e11_03",
+      "scene": "E11",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 7.6,
+      "dur": 1.49,
+      "text": "¿Corregir un texto?",
+      "note": ""
+    },
+    {
+      "id": "e11_04",
+      "scene": "E11",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 11.0,
+      "dur": 1.2,
+      "text": "¡Tú eliges!",
+      "note": "Remate, con fuerza"
+    },
+    {
+      "id": "e12_01",
+      "scene": "E12",
+      "who": "ANDRÉS, 34",
+      "voz": "B",
+      "at": 0.8,
+      "dur": 3.5,
+      "text": "¡Ahora pido mi croissant en París sin pena!",
+      "note": "Voz de hombre, testimonial de tele"
+    },
+    {
+      "id": "e12_02",
+      "scene": "E12",
+      "who": "DOÑA MARTA, 60",
+      "voz": "B",
+      "at": 6.8,
+      "dur": 2.22,
+      "text": "¡Practico inglés con mi nieto!",
+      "note": "Voz de abuelita feliz"
+    },
+    {
+      "id": "e12_03",
+      "scene": "E12",
+      "who": "CAMILA",
+      "voz": "B",
+      "at": 12.4,
+      "dur": 3.66,
+      "text": "¡Conseguí el trabajo! And yes… I am 20 years old!",
+      "note": "Feliz, segura, con orgullo"
+    },
+    {
+      "id": "e13_01",
+      "scene": "E13",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 0.3,
+      "dur": 2.78,
+      "text": "¿Y cuánto cuesta? ¡Nada! ¡Es totalmente gratis!",
+      "note": "Teletienda a tope"
+    },
+    {
+      "id": "e13_02",
+      "scene": "E13",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 4.3,
+      "dur": 2.64,
+      "text": "¡Búscala en Telegram: arroba loriaabot!",
+      "note": "Clara, deletreando un poco"
+    },
+    {
+      "id": "e14_01",
+      "scene": "E14",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 0.3,
+      "dur": 2.31,
+      "text": "¡I am 20 years old! ¡I am 20 years old!",
+      "note": "Como loro, emocionada"
+    },
+    {
+      "id": "e14_02",
+      "scene": "E14",
+      "who": "CAMILA",
+      "voz": "B",
+      "at": 3.1,
+      "dur": 2.44,
+      "text": "Loria… tú no tienes 20 años.",
+      "note": "Seca, divertida"
+    },
+    {
+      "id": "e14_03",
+      "scene": "E14",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 6.2,
+      "dur": 3.05,
+      "text": "Cierto. Tengo dos semanas. Te espero en Telegram.",
+      "note": "Con gafas, calmada y coqueta"
+    }
   ]
 }

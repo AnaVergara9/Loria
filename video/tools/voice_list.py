@@ -13,6 +13,7 @@ for sid, dur in [('E00',3),('E01',7),('E02',10),('E03',8),('E04',8),('E05',16),(
 def mmss(x):
     return f"{int(x // 60)}:{x % 60:04.1f}"
 out = ['# Guion de voces de Loria', '',
+       '> El video ya trae todas estas frases con **voz generada por IA** (en `public/voces/`). Esta lista sirve si quieren reemplazarlas por voces grabadas por ustedes.', '',
        'Cada frase tiene un **número de archivo**. Graben cada frase por separado y guárdenla con ese nombre',
        'en la carpeta `video/public/voces/` (por ejemplo `e05_03.mp3`; también sirve `.wav` o `.m4a`).',
        'El video la pone sola en el momento exacto. Si una frase no existe todavía, el video sigue funcionando con el subtítulo.', '',
