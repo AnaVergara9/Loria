@@ -68,7 +68,7 @@ export const E05_ChisteLoro: React.FC = () => {
       </Cam>
       {/* el chat con la correccion */}
       {explain && (
-        <div style={{position: 'absolute', left: 70, top: 30, transform: `translateX(${tw(t, [8.2, 8.6], [-800, 0])}px)`}}>
+        <div style={{position: 'absolute', left: 120, top: 50, transform: `translateX(${tw(t, [8.2, 8.6], [-800, 0])}px)`}}>
           <Phone
             width={470}
             rotY={12}

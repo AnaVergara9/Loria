@@ -14,7 +14,7 @@ export const E00_Gancho: React.FC = () => {
   const offY = tw(t, [2.45, 2.7], [1, 0.012]);
   const offX = tw(t, [2.7, 2.9], [1, 0]);
   return (
-    <Scene id="E00" bg="#000">
+    <Scene id="E00" bg="#000" autoCam={false}>
       <AbsoluteFill style={{transform: `scale(${offX}, ${offY})`, background: '#000'}}>
         <StudioBG />
         <Pos x={880} y={1560 + (1 - enter) * 1000} scale={1}>

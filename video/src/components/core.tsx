@@ -74,16 +74,19 @@ const WHO_COLOR: Record<string, string> = {
  * Envuelve cada escena: pone las voces grabadas (si existen) y los subtitulos.
  * Asi cada escena funciona sola y tambien dentro del video completo.
  */
-export const Scene: React.FC<{id: string; children: React.ReactNode; subs?: boolean; bg?: string}> = ({
+export const Scene: React.FC<{id: string; children: React.ReactNode; subs?: boolean; bg?: string; autoCam?: boolean}> = ({
   id,
   children,
   subs = true,
   bg = C.cream,
+  autoCam = true,
 }) => {
   const lines = LINES.filter((l) => l.scene === id);
+  const t = useCurrentFrame() / 30;
+  const cam = autoCam ? autoCamera(id, lines, t) : '';
   return (
     <AbsoluteFill style={{background: bg, overflow: 'hidden'}}>
-      {children}
+      <AbsoluteFill style={{transform: cam, transformOrigin: '50% 45%'}}>{children}</AbsoluteFill>
       {lines.map((l) => {
         const file = findFile(`voces/${l.id}.`);
         return file ? (
@@ -100,6 +103,43 @@ export const Scene: React.FC<{id: string; children: React.ReactNode; subs?: bool
         ))}
     </AbsoluteFill>
   );
+};
+
+/**
+ * CAMARA AUTOMATICA: como un editor que cambia de plano.
+ * Cada vez que alguien empieza a hablar (y cada ~2 s en momentos largos) salta a otro encuadre,
+ * con un pequeno "golpe" de zoom. Entre cortes la camara se acerca despacio y se mece un poco.
+ */
+const SHOTS = [
+  {z: 1.0, x: 0, y: 0},
+  {z: 1.07, x: -40, y: -12},
+  {z: 1.035, x: 36, y: 10},
+  {z: 1.09, x: 14, y: -22},
+];
+const autoCamera = (id: string, lines: Line[], t: number) => {
+  const dur = SCENES.find((sc) => sc.id === id)?.dur ?? 10;
+  const cuts = new Set<number>([0]);
+  lines.forEach((l) => {
+    cuts.add(Math.round(l.at * 10) / 10);
+    for (let k = l.at + 2.1; k < l.at + l.dur - 0.8; k += 2.1) cuts.add(Math.round(k * 10) / 10);
+  });
+  const sorted = [...cuts].sort((a, b) => a - b);
+  // rellenar silencios largos con cortes cada ~2.2 s
+  const all: number[] = [];
+  sorted.forEach((c, i) => {
+    all.push(c);
+    const next = sorted[i + 1] ?? dur;
+    for (let k = c + 2.2; k < next - 1.0; k += 2.2) all.push(k);
+  });
+  let idx = 0;
+  for (let i = 0; i < all.length; i++) if (t >= all[i]) idx = i;
+  const shot = SHOTS[idx % SHOTS.length];
+  const since = t - all[idx];
+  const z = shot.z + since * 0.012 + 0.035 * Math.exp(-since * 14);
+  const rot = Math.sin(t * 0.8) * 0.3;
+  const hx = Math.sin(t * 1.3) * 4;
+  const hy = Math.cos(t * 1.1) * 3;
+  return `translate(${shot.x + hx}px, ${shot.y + hy}px) scale(${z}) rotate(${rot}deg)`;
 };
 
 const Subtitle: React.FC<{who: string; text: string}> = ({who, text}) => {
@@ -226,6 +266,7 @@ export const SlamText: React.FC<{
         style={{
           transform: `translate(${x}px, ${y}px) scale(${sc * (out !== undefined ? 0.6 + 0.4 * o : 1)}) rotate(${rot}deg)`,
           opacity: Math.min(1, p * 2) * o,
+          filter: `blur(${Math.max(0, 1 - p) * 16}px)`,
           fontFamily: TITLE,
           fontSize: size,
           color,

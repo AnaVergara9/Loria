@@ -1,4 +1,5 @@
 import React from 'react';
+import {useCurrentFrame} from 'remotion';
 import {C} from '../theme';
 
 /**
@@ -61,6 +62,14 @@ export const Loria: React.FC<LoriaPose & {width?: number; style?: React.CSSPrope
   style,
   id = 'loria',
 }) => {
+  // movimiento "vivo" automatico: respira, mece la cola, la cabeza y las alas
+  const ft = useCurrentFrame() / 30;
+  const idle = 1;
+  tail += Math.sin(ft * 3.1) * 4 * idle;
+  headTilt += Math.sin(ft * 2.2) * 1.8 * idle;
+  wingR += Math.sin(ft * 2.6) * 3 * idle;
+  wingL += Math.sin(ft * 2.6 + 1) * 3 * idle;
+  const breath = Math.sin(ft * 2.6) * 0.014 * idle;
   const eyeScale = Math.max(0.08, 1 - blink);
   const px = lookX * 10;
   const py = lookY * 10;
@@ -115,6 +124,7 @@ export const Loria: React.FC<LoriaPose & {width?: number; style?: React.CSSPrope
           <path d="M372 712 C390 696 418 682 440 684 C452 708 450 736 436 756 C414 750 390 740 372 730 Z" />
         </clipPath>
       </defs>
+      <g transform={`translate(448 1110) scale(${1 - breath} ${1 + breath}) translate(-448 -1110)`}>
 
       {/* Sombra en el piso */}
       {showShadow && <ellipse cx={465} cy={1112} rx={300} ry={42} fill="#C9C7DC" />}
@@ -296,6 +306,7 @@ export const Loria: React.FC<LoriaPose & {width?: number; style?: React.CSSPrope
       )}
       {/* MONO CON BANDERAS */}
       <Bow g={g} />
+      </g>
     </svg>
   );
 };

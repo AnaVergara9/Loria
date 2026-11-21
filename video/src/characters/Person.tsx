@@ -1,4 +1,5 @@
 import React from 'react';
+import {useCurrentFrame} from 'remotion';
 import {C} from '../theme';
 
 /**
@@ -84,6 +85,11 @@ export const Person: React.FC<PersonProps> = ({
   style,
   onlyBust = false,
 }) => {
+  const ft = useCurrentFrame() / 30 + id.length * 0.7;
+  headTilt += Math.sin(ft * 2.0) * 1.6;
+  armL += Math.sin(ft * 2.3) * 3;
+  armR += Math.sin(ft * 2.3 + 1.2) * 3;
+  const breath = Math.sin(ft * 2.4) * 0.012;
   const g = (n: string) => `${id}-${n}`;
   const m = MOODS[mood];
   const skinDark = shade(skin, -28);
@@ -135,6 +141,7 @@ export const Person: React.FC<PersonProps> = ({
           <stop offset="1" stopColor={shade(hairColor, -25)} />
         </linearGradient>
       </defs>
+      <g transform={`translate(200 985) scale(${1 - breath} ${1 + breath}) translate(-200 -985)`}>
 
       {!onlyBust && <ellipse cx={200} cy={985} rx={150} ry={22} fill="rgba(42,9,4,0.18)" />}
 
@@ -193,6 +200,7 @@ export const Person: React.FC<PersonProps> = ({
           </g>
         )}
         {sweat && <path d="M318 230 C330 250 336 266 324 274 C312 280 302 268 310 250 Z" fill="#8FD3FF" stroke={O} strokeWidth={5} />}
+      </g>
       </g>
     </svg>
   );

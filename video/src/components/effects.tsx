@@ -189,8 +189,8 @@ export const CornerTag: React.FC<{text: string; at?: number}> = ({text, at = 0})
     <div
       style={{
         position: 'absolute',
-        right: 40,
-        top: 34,
+        right: 90,
+        top: 60,
         fontFamily: TITLE,
         fontSize: 30,
         color: '#fff',

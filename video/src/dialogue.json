@@ -7,8 +7,8 @@
       "who": "LORIA",
       "voz": "A",
       "at": 0.2,
-      "dur": 1.9,
-      "text": "¿Hablas inglés? ¿Sí? …A ver.",
+      "dur": 2.1,
+      "text": "¿Hablas inglés? ¿Sí? ¡A ver, a ver!",
       "note": "Pícara, como retando"
     },
     {
@@ -17,7 +17,7 @@
       "who": "JEFE",
       "voz": "A",
       "at": 0.6,
-      "dur": 1.66,
+      "dur": 1.57,
       "text": "How old are you?",
       "note": "Voz grave y seria"
     },
@@ -27,7 +27,7 @@
       "who": "CAMILA",
       "voz": "B",
       "at": 2.4,
-      "dur": 1.56,
+      "dur": 1.51,
       "text": "I have 20 years!",
       "note": "Muy segura, orgullosa"
     },
@@ -37,7 +37,7 @@
       "who": "CAMILA",
       "voz": "B",
       "at": 0.3,
-      "dur": 1.72,
+      "dur": 1.69,
       "text": "Je suis… ¿un croissant?",
       "note": "Dudando"
     },
@@ -47,7 +47,7 @@
       "who": "CAMILA",
       "voz": "B",
       "at": 2.7,
-      "dur": 1.88,
+      "dur": 1.37,
       "text": "Where is the baño?",
       "note": "Apurada"
     },
@@ -57,7 +57,7 @@
       "who": "COLEGA",
       "voz": "A",
       "at": 5.1,
-      "dur": 1.83,
+      "dur": 1.85,
       "text": "Any questions, Camila?",
       "note": "Voz de oficina, neutra"
     },
@@ -77,7 +77,7 @@
       "who": "LORIA",
       "voz": "A",
       "at": 2.6,
-      "dur": 2.0,
+      "dur": 2.03,
       "text": "¿Te quedas callada en francés?",
       "note": "Igual, más intensa"
     },
@@ -87,7 +87,7 @@
       "who": "LORIA",
       "voz": "A",
       "at": 4.8,
-      "dur": 1.2,
+      "dur": 1.24,
       "text": "¿PENA DE HABLAR?",
       "note": "Gritado, eco"
     },
@@ -97,8 +97,8 @@
       "who": "LORIA",
       "voz": "A",
       "at": 1.4,
-      "dur": 1.93,
-      "text": "¡No sufras más! ¡Llegó Loria!",
+      "dur": 2.41,
+      "text": "¡No sufras más! ¡Ya llegó Loria!",
       "note": "Presentadora de teletienda, muy energética"
     },
     {
@@ -107,7 +107,7 @@
       "who": "CAMILA",
       "voz": "B",
       "at": 0.8,
-      "dur": 1.7,
+      "dur": 1.55,
       "text": "I have 20 years…",
       "note": "Tímida, bajito"
     },
@@ -117,7 +117,7 @@
       "who": "LORIA",
       "voz": "A",
       "at": 2.8,
-      "dur": 2.16,
+      "dur": 2.51,
       "text": "¡I have 20 years! ¡I have 20 years!",
       "note": "Como loro, chillón y feliz"
     },
@@ -127,8 +127,8 @@
       "who": "LORIA",
       "voz": "A",
       "at": 8.0,
-      "dur": 6.57,
-      "text": "Perdón. Se dice «I am 20 years old». En inglés la edad va con «to be», no con «tener».",
+      "dur": 7.3,
+      "text": "Perdón. Se dice «I am 20 years old». En inglés la edad va con el verbo «to be», no con «tener».",
       "note": "Ya con gafas: calmada, profesora amable"
     },
     {
@@ -137,7 +137,7 @@
       "who": "LORIA",
       "voz": "A",
       "at": 0.3,
-      "dur": 3.99,
+      "dur": 4.78,
       "text": "¡Escríbele en inglés o en francés, y Loria te corrige y te explica en español!",
       "note": "Rápido, vendedora"
     },
@@ -157,7 +157,7 @@
       "who": "LORIA",
       "voz": "A",
       "at": 0.3,
-      "dur": 1.97,
+      "dur": 1.99,
       "text": "¿No quieres escribir? ¡Háblale!",
       "note": "Energética"
     },
@@ -167,7 +167,7 @@
       "who": "LORIA",
       "voz": "A",
       "at": 2.8,
-      "dur": 2.37,
+      "dur": 2.56,
       "text": "En el bus, en la cocina… ¡o en pijama!",
       "note": "Una palabra por cada lugar"
     },
@@ -177,7 +177,7 @@
       "who": "CAMILA",
       "voz": "B",
       "at": 7.0,
-      "dur": 1.61,
+      "dur": 1.46,
       "text": "I have tree brothers.",
       "note": "Grabando nota de voz, tranquila"
     },
@@ -187,7 +187,7 @@
       "who": "LORIA",
       "voz": "A",
       "at": 10.6,
-      "dur": 2.73,
+      "dur": 2.89,
       "text": "¡Three! Con la lengua entre los dientes.",
       "note": "Divertida, mostrando"
     },
@@ -197,7 +197,7 @@
       "who": "CAMILA",
       "voz": "B",
       "at": 15.0,
-      "dur": 1.95,
+      "dur": 2.2,
       "text": "Yesterday I eat pizza.",
       "note": "Medio dormida, en la cama"
     },
@@ -207,7 +207,7 @@
       "who": "LORIA",
       "voz": "A",
       "at": 17.2,
-      "dur": 1.2,
+      "dur": 1.33,
       "text": "¡Pizza! ¡Pizza!",
       "note": "Como loro, emocionada"
     },
@@ -217,7 +217,7 @@
       "who": "LORIA",
       "voz": "A",
       "at": 19.6,
-      "dur": 2.58,
+      "dur": 2.73,
       "text": "¡Casi! Se dice «I ate pizza».",
       "note": "Con gafas, calmada"
     },
@@ -227,7 +227,7 @@
       "who": "LORIA",
       "voz": "A",
       "at": 1.0,
-      "dur": 2.36,
+      "dur": 2.37,
       "text": "Un momento… ¿y para los más pequeños?",
       "note": "Curiosa, misteriosa"
     },
@@ -237,8 +237,8 @@
       "who": "NIÑO",
       "voz": "B",
       "at": 6.5,
-      "dur": 1.2,
-      "text": "Apple!",
+      "dur": 1.23,
+      "text": "An apple!",
       "note": "Voz de niño, feliz"
     },
     {
@@ -247,7 +247,7 @@
       "who": "LORIA BEBÉ",
       "voz": "A",
       "at": 8.0,
-      "dur": 2.09,
+      "dur": 2.14,
       "text": "¡Muy bien! ¡Ganaste una estrella!",
       "note": "Vocecita aguda de pollito"
     },
@@ -257,8 +257,8 @@
       "who": "NIÑO",
       "voz": "B",
       "at": 12.0,
-      "dur": 1.2,
-      "text": "Le chat!",
+      "dur": 1.21,
+      "text": "C'est un chat!",
       "note": "Voz de niño, orgulloso"
     },
     {
@@ -267,7 +267,7 @@
       "who": "NIÑO",
       "voz": "B",
       "at": 16.0,
-      "dur": 1.22,
+      "dur": 1.2,
       "text": "Thank you!",
       "note": "Voz de niño, gritando de alegría"
     },
@@ -277,7 +277,7 @@
       "who": "LORIA",
       "voz": "A",
       "at": 0.8,
-      "dur": 1.43,
+      "dur": 1.44,
       "text": "¿Quieres conversar?",
       "note": "Al ritmo, como presentadora"
     },
@@ -287,8 +287,8 @@
       "who": "LORIA",
       "voz": "A",
       "at": 4.2,
-      "dur": 1.5,
-      "text": "¿Hacer ejercicios?",
+      "dur": 1.85,
+      "text": "¿Quieres hacer ejercicios?",
       "note": ""
     },
     {
@@ -297,8 +297,8 @@
       "who": "LORIA",
       "voz": "A",
       "at": 7.6,
-      "dur": 1.49,
-      "text": "¿Corregir un texto?",
+      "dur": 1.9,
+      "text": "¿O quieres corregir un texto?",
       "note": ""
     },
     {
@@ -317,7 +317,7 @@
       "who": "ANDRÉS, 34",
       "voz": "B",
       "at": 0.8,
-      "dur": 3.5,
+      "dur": 2.76,
       "text": "¡Ahora pido mi croissant en París sin pena!",
       "note": "Voz de hombre, testimonial de tele"
     },
@@ -327,7 +327,7 @@
       "who": "DOÑA MARTA, 60",
       "voz": "B",
       "at": 6.8,
-      "dur": 2.22,
+      "dur": 2.3,
       "text": "¡Practico inglés con mi nieto!",
       "note": "Voz de abuelita feliz"
     },
@@ -337,7 +337,7 @@
       "who": "CAMILA",
       "voz": "B",
       "at": 12.4,
-      "dur": 3.66,
+      "dur": 3.62,
       "text": "¡Conseguí el trabajo! And yes… I am 20 years old!",
       "note": "Feliz, segura, con orgullo"
     },
@@ -347,7 +347,7 @@
       "who": "LORIA",
       "voz": "A",
       "at": 0.3,
-      "dur": 2.78,
+      "dur": 2.82,
       "text": "¿Y cuánto cuesta? ¡Nada! ¡Es totalmente gratis!",
       "note": "Teletienda a tope"
     },
@@ -357,8 +357,8 @@
       "who": "LORIA",
       "voz": "A",
       "at": 4.3,
-      "dur": 2.64,
-      "text": "¡Búscala en Telegram: arroba loriaabot!",
+      "dur": 2.67,
+      "text": "¡Búscala en Telegram como @loriaabot!",
       "note": "Clara, deletreando un poco"
     },
     {
@@ -367,7 +367,7 @@
       "who": "LORIA",
       "voz": "A",
       "at": 0.3,
-      "dur": 2.31,
+      "dur": 2.8,
       "text": "¡I am 20 years old! ¡I am 20 years old!",
       "note": "Como loro, emocionada"
     },
@@ -377,7 +377,7 @@
       "who": "CAMILA",
       "voz": "B",
       "at": 3.1,
-      "dur": 2.44,
+      "dur": 1.91,
       "text": "Loria… tú no tienes 20 años.",
       "note": "Seca, divertida"
     },
@@ -387,7 +387,7 @@
       "who": "LORIA",
       "voz": "A",
       "at": 6.2,
-      "dur": 3.05,
+      "dur": 3.14,
       "text": "Cierto. Tengo dos semanas. Te espero en Telegram.",
       "note": "Con gafas, calmada y coqueta"
     }

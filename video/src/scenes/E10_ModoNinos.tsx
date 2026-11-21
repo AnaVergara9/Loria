@@ -26,7 +26,7 @@ export const E10_ModoNinos: React.FC = () => {
   const stars = t >= S3 ? 3 : t >= S2 ? 2 : t >= S1 ? 1 : 0;
   const wipe = tw(t, [0, 0.45], [0, 100]);
   return (
-    <Scene id="E10" bg="#000">
+    <Scene id="E10" bg="#000" autoCam={false}>
       <AbsoluteFill style={{clipPath: `circle(${wipe * 1.3}% at 50% 50%)`}}>
         <svg width={0} height={0} style={{position: 'absolute'}}>
           <filter id="crayon">
@@ -156,8 +156,8 @@ const Chick: React.FC<{t: number}> = ({t}) => {
 /** Dibujitos que aparecen con cada palabra del nino. */
 const Doodles: React.FC<{t: number}> = ({t}) => {
   const items = [
-    {at: 6.5, x: 560, y: 150, el: '🍎', word: 'Apple!'},
-    {at: 12.0, x: 790, y: 130, el: '🐱', word: 'Le chat!'},
+    {at: 6.5, x: 560, y: 150, el: '🍎', word: 'An apple!'},
+    {at: 12.0, x: 790, y: 130, el: '🐱', word: "C'est un chat!"},
     {at: 16.0, x: 1430, y: 150, el: '💛', word: 'Thank you!'},
   ];
   return (

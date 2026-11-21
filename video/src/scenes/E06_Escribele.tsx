@@ -28,7 +28,7 @@ export const E06_Escribele: React.FC = () => {
   ];
   const count = t >= 9.0 ? 2 : t >= 3.3 ? 1 : 0;
   return (
-    <Scene id="E06">
+    <Scene id="E06" autoCam={false}>
       <StudioBG floor={false} />
       <Cam zoom={zoom} origin="38% 32%">
         <AbsoluteFill style={{justifyContent: 'center', alignItems: 'center'}}>
