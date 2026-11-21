@@ -1,5 +1,9 @@
 .venv/
+venv/
 .env
 __pycache__/
-audios/
-parley.db
+
+# Se crean al usar el bot (datos personales o descargas): no se suben
+datos/audios/
+datos/parley.db
+datos/cmudict.dict

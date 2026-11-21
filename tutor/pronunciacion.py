@@ -1,4 +1,5 @@
 import os
+import sys
 import torch
 import torch.nn as nn
 import numpy as np
@@ -6,6 +7,10 @@ from faster_whisper import decode_audio
 from transformers import Wav2Vec2ForCTC, Wav2Vec2FeatureExtractor, Wav2Vec2PhonemeCTCTokenizer
 
 MODEL_ID = "facebook/wav2vec2-lv-60-espeak-cv-ft"
+# Rutas junto a este archivo: funcionan aunque el bot se ejecute desde otra carpeta.
+CARPETA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "datos")
+RUTA_MODELO = os.path.join(CARPETA, "evaluador_pronunciacion.pt")
+RUTA_NORMALIZACION = os.path.join(CARPETA, "normalizacion.npz")
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 feature_extractor = Wav2Vec2FeatureExtractor.from_pretrained(MODEL_ID)
@@ -34,31 +39,24 @@ class EvaluadorPronunciacion(nn.Module):
 
 
 evaluador = EvaluadorPronunciacion(len(vocab)).to(device)
-evaluador.load_state_dict(torch.load("evaluador_pronunciacion.pt", map_location=device))
+evaluador.load_state_dict(torch.load(RUTA_MODELO, map_location=device))
 evaluador.eval()
 
 # Normalización de las características acústicas (se genera en Colab junto con el .pt).
 # El .pt y normalizacion.npz van SIEMPRE juntos: si no coinciden, los puntajes no valen.
-if os.path.exists("normalizacion.npz"):
-    _norm = np.load("normalizacion.npz")
+if os.path.exists(RUTA_NORMALIZACION):
+    _norm = np.load(RUTA_NORMALIZACION)
     NORM_MEDIA, NORM_DESV = _norm["media"], _norm["desv"]
-    print("Normalización cargada (normalizacion.npz)")
+    print("Normalización cargada (normalizacion.npz)", file=sys.stderr)
 else:
     NORM_MEDIA = NORM_DESV = None
-    print("Sin normalizacion.npz: el evaluador asume un modelo entrenado sin normalizar")
+    print("Sin normalizacion.npz: el evaluador asume un modelo entrenado sin normalizar", file=sys.stderr)
 
 # Un fonema se marca como débil si su puntaje (escala 0 a 2) queda por debajo de este valor.
 # Calíbralo con probar_pronunciacion.py: si nunca marca nada, súbelo; si marca todo, bájalo.
 UMBRAL_FONEMA = 1.5
 
-# Banco de ejercicios con sus fonemas IPA esperados
-EJERCICIOS_PRONUNCIACION = [
-    {"frase": "I think the weather is nice today", "fonemas": "aɪ θ ɪ ŋ k ð ə w ɛ ð ɚ ɪ z n aɪ s t ə d eɪ"},
-    {"frase": "She sells seashells by the seashore", "fonemas": "ʃ i s ɛ l z s i ʃ ɛ l z b aɪ ð ə s i ʃ ɔ ɹ"},
-    {"frase": "Three free throws for the team", "fonemas": "θ ɹ i f ɹ i θ ɹ oʊ z f ɔ ɹ ð ə t i m"},
-    {"frase": "Can you read this book with me?", "fonemas": "k æ n j u ɹ i d ð ɪ s b ʊ k w ɪ ð m i"},
-    {"frase": "Very well, thank you for asking", "fonemas": "v ɛ ɹ i w ɛ l θ æ ŋ k j u f ɔ ɹ æ s k ɪ ŋ"},
-]
+# El banco de frases (con sus fonemas) está en datos/ejercicios.json y se maneja en tutor/ejercicios.py.
 
 
 def evaluar_audio(ruta_audio: str, fonemas_esperados: str, detalle: bool = False) -> dict:

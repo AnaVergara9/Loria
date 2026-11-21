@@ -1,9 +1,15 @@
-python-telegram-bot
-python-dotenv
-faster-whisper
-google-genai
-av<19
-torch
-transformers
-librosa
-soundfile
+# Versiones fijas: son las probadas con Python 3.14 en Windows. Si se cambian, volver a probar
+# (python probar_modelos.py, python probar_mcp.py y python probar_pronunciacion.py).
+python-telegram-bot==22.8
+python-dotenv==1.2.4
+faster-whisper==1.2.1
+av==18.1.0              # av 19 rompe faster-whisper ("metadata_errors")
+google-genai==3.6.1
+groq==1.7.0
+mcp==2.3.0
+pydantic==2.14.3
+numpy==2.5.5
+torch==2.15.0
+transformers==5.23.0
+librosa==1.0.1
+soundfile==0.14.0
