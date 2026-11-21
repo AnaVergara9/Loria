@@ -1,11 +1,12 @@
+import json
 import time
 import random
 import logging
 from collections import defaultdict, deque
 
-from google.genai import types
+from google.genai import types, errors
 
-from llm import cliente, MODELO_TEXTO, corregir
+from llm import MODELOS, PENSAR_POCO, llamar, corregir, es_error_de_red
 from db import obtener_usuario, registrar_error, guardar_ejercicio
 from pronunciacion import EJERCICIOS_PRONUNCIACION, evaluar_audio
 
@@ -13,6 +14,24 @@ MAX_PASOS = 5  # tope de vueltas del ciclo, evita bucles infinitos
 
 # Memoria de corto plazo: últimos turnos por usuario (solo texto). Se pierde al reiniciar.
 historial = defaultdict(lambda: deque(maxlen=8))
+
+
+# Rotación de ejercicios: se recorren todos en orden aleatorio antes de repetir, y nunca el mismo dos veces seguidas.
+_pendientes: dict = {}
+_ultimo: dict = {}
+
+
+def siguiente_ejercicio(user_id: int) -> dict:
+    bolsa = _pendientes.get(user_id)
+    if not bolsa:
+        bolsa = list(range(len(EJERCICIOS_PRONUNCIACION)))
+        random.shuffle(bolsa)
+        if len(bolsa) > 1 and bolsa[-1] == _ultimo.get(user_id):
+            bolsa[0], bolsa[-1] = bolsa[-1], bolsa[0]
+    idx = bolsa.pop()
+    _pendientes[user_id] = bolsa
+    _ultimo[user_id] = idx
+    return EJERCICIOS_PRONUNCIACION[idx]
 
 
 # ---------------------------------------------------------------- herramientas
@@ -58,6 +77,22 @@ DECLARACIONES = [
 
 
 def ejecutar(nombre: str, args: dict, ctx: dict) -> dict:
+    """Ejecuta una herramienta con caché por turno.
+
+    Si un modelo falla a mitad de un turno y se reintenta con otro, las herramientas que ya
+    se ejecutaron NO se repiten (así no se duplican errores guardados ni se cambia el ejercicio).
+    """
+    clave = (nombre, json.dumps(args, sort_keys=True, default=str))
+    cache = ctx.setdefault("cache", {})
+    if clave in cache:
+        return cache[clave]
+    resultado = _ejecutar(nombre, args, ctx)
+    if "error" not in resultado:
+        cache[clave] = resultado
+    return resultado
+
+
+def _ejecutar(nombre: str, args: dict, ctx: dict) -> dict:
     """Ejecuta una herramienta. Siempre devuelve un dict; si algo falla, devuelve {'error': ...}."""
     uid = ctx["user_id"]
     try:
@@ -77,7 +112,7 @@ def ejecutar(nombre: str, args: dict, ctx: dict) -> dict:
             }
 
         if nombre == "generar_ejercicio":
-            ej = random.choice(EJERCICIOS_PRONUNCIACION)
+            ej = siguiente_ejercicio(uid)
             guardar_ejercicio(uid, ej["frase"], ej["fonemas"])
             return {"frase": ej["frase"]}
 
@@ -88,7 +123,7 @@ def ejecutar(nombre: str, args: dict, ctx: dict) -> dict:
             if not u["fonemas_objetivo"]:
                 return {"error": "No hay un ejercicio activo. Primero hay que proponer uno."}
             res = evaluar_audio(ctx["ruta_audio"], u["fonemas_objetivo"])
-            guardar_ejercicio(uid, None, None)  # cierra el ejercicio
+            ctx["evaluado"] = True  # el ejercicio se cierra al final del turno, si todo salió bien
             return {"frase": u["frase_objetivo"], **res}
 
         return {"error": f"Herramienta desconocida: {nombre}"}
@@ -116,38 +151,26 @@ Tienes herramientas. En cada turno decide cuál usar:
 Cómo responder al final (texto plano, sin Markdown, máximo 8 líneas):
 - Después de corregir_gramatica: muestra la frase corregida y como máximo 3 ediciones con su explicación breve en español. No inventes correcciones que la herramienta no dio. Si no hubo errores, felicítalo. Luego responde al contenido de lo que dijo con 1 o 2 frases en el idioma que practica y haz una pregunta corta para seguir la conversación.
 - Después de generar_ejercicio: presenta la frase y pídele que envíe una nota de voz leyéndola.
-- Después de evaluar_pronunciacion: comenta cómo le fue en general sin mostrar números ni símbolos fonéticos. Si la herramienta marca sonidos débiles, preséntalos como una sugerencia prudente ("parece que la 'th' pudo sonar parecida a una 't'") y explica máximo 2 con ejemplos cotidianos (por ejemplo, la 'th' de 'think' se hace sacando un poquito la punta de la lengua entre los dientes). Nunca afirmes con certeza que pronunció mal un sonido. Si no hay sonidos débiles, felicítalo pero sin exagerar.
+- Después de evaluar_pronunciacion: comenta cómo le fue sin mostrar números ni símbolos fonéticos; explica máximo 2 sonidos con ejemplos cotidianos (por ejemplo, la 'th' de 'think' se hace sacando un poquito la punta de la lengua entre los dientes); si no hay sonidos débiles, felicítalo.
+- Si una herramienta devuelve un error, explícalo con sencillez y sugiere qué hacer.
 Nunca afirmes un puntaje ni una corrección que no vengan de una herramienta."""
 
 
 # ---------------------------------------------------------------- ciclo ReAct
-def responder(user_id: int, mensaje: str, perfil: str = "adulto", ruta_audio: str | None = None):
-    """Devuelve (texto_de_respuesta, traza). La traza es la lista de acciones y observaciones."""
-    ctx = {"user_id": user_id, "ruta_audio": ruta_audio}
-    msg_usuario = types.Content(role="user", parts=[types.Part(text=mensaje)])
-    contenidos = list(historial[user_id]) + [msg_usuario]
-
-    config = types.GenerateContentConfig(
-        system_instruction=construir_instruccion(perfil),
-        tools=[types.Tool(function_declarations=DECLARACIONES)],
-        automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
-    )
-
-    traza = []
+def _ciclo(modelo, contenidos, config, ctx, traza, limite):
+    """Un ciclo ReAct completo con un modelo. Devuelve (texto, terminado_bien)."""
     for paso in range(1, MAX_PASOS + 1):
-        resp = cliente.models.generate_content(model=MODELO_TEXTO, contents=contenidos, config=config)
+        logging.info("AGENTE: llamando a %s (paso %s)", modelo, paso)
+        resp = llamar(modelo, contenidos, config, limite=limite)
         if not resp.candidates or resp.candidates[0].content is None:
-            return "No pude generar una respuesta, intenta reformular tu mensaje.", traza
+            return "No pude generar una respuesta, intenta reformular tu mensaje.", False
 
         # Se agrega el contenido del modelo tal cual (conserva las firmas de razonamiento de Gemini 3).
         contenidos.append(resp.candidates[0].content)
         llamadas = resp.function_calls or []
 
         if not llamadas:  # el modelo ya tiene lo necesario: responde
-            texto = (resp.text or "").strip()
-            historial[user_id].append(msg_usuario)
-            historial[user_id].append(types.Content(role="model", parts=[types.Part(text=texto)]))
-            return texto, traza
+            return (resp.text or "").strip(), True
 
         partes = []
         for fc in llamadas:  # ACTUAR -> OBSERVAR
@@ -161,4 +184,47 @@ def responder(user_id: int, mensaje: str, perfil: str = "adulto", ruta_audio: st
             partes.append(types.Part.from_function_response(name=fc.name, response={"resultado": resultado}))
         contenidos.append(types.Content(role="user", parts=partes))
 
-    return "Me enredé un poco con tu mensaje, ¿puedes intentarlo de nuevo?", traza
+    return "Me enredé un poco con tu mensaje, ¿puedes intentarlo de nuevo?", False
+
+
+def responder(user_id: int, mensaje: str, perfil: str = "adulto", ruta_audio: str | None = None):
+    """Devuelve (texto_de_respuesta, traza). La traza es la lista de acciones y observaciones.
+
+    Si un modelo está saturado, se repite el ciclo desde cero con el siguiente de MODELOS
+    (no se mezclan modelos dentro de un mismo ciclo).
+    """
+    ctx = {"user_id": user_id, "ruta_audio": ruta_audio}
+    msg_usuario = types.Content(role="user", parts=[types.Part(text=mensaje)])
+    base = list(historial[user_id]) + [msg_usuario]
+
+    config = types.GenerateContentConfig(
+        system_instruction=construir_instruccion(perfil),
+        tools=[types.Tool(function_declarations=DECLARACIONES)],
+        automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True),
+        thinking_config=PENSAR_POCO,
+    )
+    limite = time.time() + 40  # presupuesto de tiempo para todo el turno
+
+    traza = []
+    ultimo_error = None
+    for modelo in MODELOS:
+        try:
+            texto, bien = _ciclo(modelo, list(base), config, ctx, traza, limite)
+        except TimeoutError:
+            raise  # se agotó el presupuesto de tiempo del turno
+        except Exception as e:
+            if isinstance(e, errors.APIError) or es_error_de_red(e):
+                ultimo_error = e
+                logging.warning("AGENTE: %s no disponible (%s), probando otro modelo", modelo,
+                                getattr(e, "code", type(e).__name__))
+                traza.append(f"⚠️ {modelo} no disponible ({getattr(e, 'code', type(e).__name__)}), probando otro modelo")
+                continue
+            raise
+        if bien:
+            historial[user_id].append(msg_usuario)
+            historial[user_id].append(types.Content(role="model", parts=[types.Part(text=texto)]))
+            if ctx.get("evaluado"):
+                guardar_ejercicio(user_id, None, None)  # ahora sí: el ejercicio quedó evaluado y respondido
+        return texto, traza
+
+    raise ultimo_error

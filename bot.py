@@ -5,19 +5,20 @@ import logging
 from dotenv import load_dotenv
 from faster_whisper import WhisperModel
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.error import NetworkError
 from telegram.ext import (
     ApplicationBuilder, CommandHandler, MessageHandler, CallbackQueryHandler, filters, ContextTypes
 )
 
 load_dotenv()
 logging.basicConfig(level=logging.INFO)
-logging.getLogger("httpx").setLevel(logging.WARNING)
-for nombre in ("httpx2", "huggingface_hub", "telegram.ext.Application"):
-    logging.getLogger(nombre).setLevel(logging.WARNING)
+for _nombre in ("httpx", "httpx2", "huggingface_hub", "telegram.ext.Application"):
+    logging.getLogger(_nombre).setLevel(logging.WARNING)
 
 from db import init_db, obtener_usuario, guardar_perfil, guardar_ejercicio, eliminar_usuario
 from pronunciacion import EJERCICIOS_PRONUNCIACION
 import agente
+from llm import es_error_de_red
 
 os.makedirs("audios", exist_ok=True)
 init_db()
@@ -29,6 +30,17 @@ def transcribir(ruta):
     segmentos, info = modelo_whisper.transcribe(ruta)
     texto = " ".join(s.text.strip() for s in segmentos)
     return texto, info.language
+
+
+def mensaje_error(e: Exception) -> str:
+    if isinstance(e, TimeoutError):
+        return "Estoy tardando más de lo normal en responder 🦜 Intenta de nuevo en un momento."
+    if es_error_de_red(e):
+        return "Se está cortando la conexión a internet 🦜 Intenta de nuevo en unos segundos."
+    codigo = getattr(e, "code", None)
+    if codigo in (429, 500, 502, 503, 504):
+        return "Mis servidores de IA están muy ocupados en este momento 🦜 Intenta de nuevo en unos segundos."
+    return None
 
 
 async def sin_consentimiento(update: Update, usuario: dict) -> bool:
@@ -92,7 +104,7 @@ async def practicar(update: Update, context: ContextTypes.DEFAULT_TYPE):
     usuario = obtener_usuario(user_id)
     if await sin_consentimiento(update, usuario):
         return
-    ejercicio = random.choice(EJERCICIOS_PRONUNCIACION)
+    ejercicio = agente.siguiente_ejercicio(user_id)
     guardar_ejercicio(user_id, ejercicio["frase"], ejercicio["fonemas"])
 
     intro = (
@@ -141,9 +153,9 @@ async def responder_texto(update: Update, context: ContextTypes.DEFAULT_TYPE):
             agente.responder, user_id, update.message.text, usuario["perfil"]
         )
         await enviar(update, context, respuesta, traza)
-    except Exception:
+    except Exception as e:
         logging.exception("Error en responder_texto")
-        await update.message.reply_text("Tuve un problema al revisar tu mensaje, intenta de nuevo.")
+        await update.message.reply_text(mensaje_error(e) or "Tuve un problema al revisar tu mensaje, intenta de nuevo.")
 
 
 async def responder_voz(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -153,20 +165,25 @@ async def responder_voz(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     ruta = f"audios/{update.message.message_id}.ogg"
+    logging.info("VOZ: mensaje recibido")
     try:
         archivo = await update.message.voice.get_file()
         await archivo.download_to_drive(ruta)
+        logging.info("VOZ: audio descargado")
         await context.bot.send_chat_action(update.effective_chat.id, "typing")
 
         if usuario["frase_objetivo"]:
             # Hay un ejercicio activo: no hace falta transcribir, el agente evalúa la pronunciación.
+            await update.message.reply_text("🎧 Evaluando tu pronunciación, dame unos segundos...")
             mensaje = (
                 f'[El estudiante envió una nota de voz para el ejercicio activo: '
                 f'"{usuario["frase_objetivo"]}". Evalúa su pronunciación.]'
             )
         else:
             # Conversación libre: Ruta 1 (Whisper) -> el agente corrige y conversa.
+            logging.info("VOZ: transcribiendo con Whisper...")
             texto, _idioma = await asyncio.to_thread(transcribir, ruta)
+            logging.info("VOZ: transcripción lista: %s", texto)
             if not texto.strip():
                 await update.message.reply_text("No alcancé a escucharte, ¿puedes grabarlo otra vez?")
                 return
@@ -177,18 +194,28 @@ async def responder_voz(update: Update, context: ContextTypes.DEFAULT_TYPE):
             agente.responder, user_id, mensaje, usuario["perfil"], ruta
         )
         await enviar(update, context, respuesta, traza)
-    except Exception:
+    except Exception as e:
         logging.exception("Error procesando audio")
-        await update.message.reply_text("Tuve un problema procesando tu nota de voz, intenta de nuevo.")
+        await update.message.reply_text(mensaje_error(e) or "Tuve un problema procesando tu nota de voz, intenta de nuevo.")
     finally:
         if os.path.exists(ruta):
             os.remove(ruta)  # Ley 1581: el audio no se conserva
+
+
+async def manejar_error(update, context: ContextTypes.DEFAULT_TYPE):
+    """Errores de red con Telegram: una línea en la terminal (el bot reintenta solo cuando vuelve el internet)."""
+    err = context.error
+    if isinstance(err, NetworkError):  # TimedOut es una subclase de NetworkError
+        logging.warning("Problema de red con Telegram (se reintenta solo): %s", err)
+        return
+    logging.error("Error no controlado", exc_info=err)
 
 
 def main():
     app = (
         ApplicationBuilder()
         .token(os.getenv("TELEGRAM_TOKEN"))
+        .concurrent_updates(True)
         .connect_timeout(30)
         .read_timeout(30)
         .write_timeout(30)
@@ -202,6 +229,7 @@ def main():
     app.add_handler(CommandHandler("traza", traza_cmd))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, responder_texto))
     app.add_handler(MessageHandler(filters.VOICE, responder_voz))
+    app.add_error_handler(manejar_error)
     app.run_polling()
 
 
