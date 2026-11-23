@@ -9,14 +9,14 @@ import {C} from '../theme';
 // E01 (0:03-0:10) Entrevista en blanco y negro: "How old are you?" / "I have 20 years!" -> congelado + ¡ERROR!
 export const E01_Entrevista: React.FC = () => {
   const real = useT();
-  const FREEZE = 4.3;
+  const FREEZE = 4.9;
   const t = Math.min(real, FREEZE); // despues del congelado nada se mueve
   // camara: plano general -> jefe -> Camila -> congelado
-  const shot = real < 1.0 ? 0 : real < 2.3 ? 1 : real < FREEZE ? 2 : 3;
+  const shot = real < 0.9 ? 0 : real < 2.9 ? 1 : real < FREEZE ? 2 : 3;
   const cams = [
     {zoom: tw(real, [0, 0.6], [1, 1.06]), origin: '50% 50%'},
-    {zoom: tw(real, [1.0, 2.3], [1.9, 2.05]), origin: '28% 30%'},
-    {zoom: tw(real, [2.3, FREEZE], [2.0, 2.15]), origin: '74% 30%'},
+    {zoom: tw(real, [0.9, 2.9], [1.9, 2.05]), origin: '28% 30%'},
+    {zoom: tw(real, [2.9, FREEZE], [2.0, 2.15]), origin: '74% 30%'},
     {zoom: tw(real, [FREEZE, FREEZE + 0.2, 7], [1.5, 1.25, 1.32]), origin: '55% 40%'},
   ][shot];
   const sh = real > FREEZE && real < FREEZE + 0.5 ? shake(real, 1 - (real - FREEZE) / 0.5) : {x: 0, y: 0};
@@ -33,23 +33,23 @@ export const E01_Entrevista: React.FC = () => {
             <Person
               {...CAMILA}
               width={380}
-              mood={t > 2.3 ? 'proud' : 'neutral'}
+              mood={t > 2.9 ? 'proud' : 'neutral'}
               talk={talkAmount(t, 'E01', 'CAMILA')}
               lookX={-0.6}
               blink={blinkAt(t, 2)}
-              armR={t > 2.4 ? 60 : 10}
-              foreR={t > 2.4 ? -70 : 0}
-              headTilt={t > 2.4 ? 6 : 0}
+              armR={t > 3.0 ? 60 : 10}
+              foreR={t > 3.0 ? -70 : 0}
+              headTilt={t > 3.0 ? 6 : 0}
             />
           </Pos>
         </Cam>
       </OldTV>
       <Stamp at={FREEZE + 0.1} text="¡ERROR!" size={190} />
-      <Sfx name="pop" at={1.0} volume={0.4} />
-      <Sfx name="pop" at={2.3} volume={0.4} />
+      <Sfx name="pop" at={0.9} volume={0.4} />
+      <Sfx name="pop" at={2.9} volume={0.4} />
       <Sfx name="buzzer" at={FREEZE} />
       <Sfx name="stamp" at={FREEZE + 0.12} />
-      <SilentCard from={0} to={1.0} text={<>Lunes, 9:00 a.m.<br />La gran entrevista…</>} />
+      <SilentCard from={0} to={0.9} text={<>Lunes, 9:00 a.m.<br />La gran entrevista…</>} />
       <Ono at={FREEZE} text="¡BZZZT!" x={1500} y={860} size={110} dur={1.2} rot={-6} />
     </Scene>
   );

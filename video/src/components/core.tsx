@@ -140,7 +140,7 @@ const autoCamera = (id: string, lines: Line[], t: number) => {
   const cuts = new Set<number>([0]);
   lines.forEach((l) => {
     cuts.add(Math.round(l.at * 10) / 10);
-    for (let k = l.at + 2.1; k < l.at + l.dur - 0.8; k += 2.1) cuts.add(Math.round(k * 10) / 10);
+    for (let k = l.at + 3.5; k < l.at + l.dur - 1.0; k += 3.5) cuts.add(Math.round(k * 10) / 10);
   });
   const sorted = [...cuts].sort((a, b) => a - b);
   // rellenar silencios largos con cortes cada ~2.2 s
@@ -148,13 +148,13 @@ const autoCamera = (id: string, lines: Line[], t: number) => {
   sorted.forEach((c, i) => {
     all.push(c);
     const next = sorted[i + 1] ?? dur;
-    for (let k = c + 2.2; k < next - 1.0; k += 2.2) all.push(k);
+    for (let k = c + 3.5; k < next - 1.5; k += 3.5) all.push(k);
   });
   let idx = 0;
   for (let i = 0; i < all.length; i++) if (t >= all[i]) idx = i;
   const shot = SHOTS[idx % SHOTS.length];
   const since = t - all[idx];
-  const z = shot.z + since * 0.012 + 0.035 * Math.exp(-since * 14);
+  const z = shot.z + since * 0.008 + 0.02 * Math.exp(-since * 10);
   const rot = Math.sin(t * 0.8) * 0.3;
   const hx = Math.sin(t * 1.3) * 4;
   const hy = Math.cos(t * 1.1) * 3;

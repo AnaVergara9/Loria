@@ -35,7 +35,7 @@ export const Bubble: React.FC<{
   const down = ty > y; // la colita apunta hacia abajo
   const segs = parse(text);
   const totalWords = segs.reduce((a, s) => a + s.words.length, 0);
-  const shown = Math.min(totalWords, Math.floor(t * 9) + 1); // 9 palabras por segundo
+  const shown = Math.min(totalWords, Math.floor((t / 0.3) * totalWords) + 1); // todo el texto en 0.3 s
   const shout = kind === 'shout';
   const whisper = kind === 'whisper';
   const silent = kind === 'silent'; // cine mudo: carton negro, letra clasica
