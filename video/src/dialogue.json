@@ -107,9 +107,18 @@
       "who": "CAMILA",
       "voz": "B",
       "at": 0.8,
-      "dur": 1.55,
+      "dur": 2.0,
       "text": "I have 20 years…",
-      "note": "Tímida, bajito"
+      "note": "Tímida, bajito",
+      "show": "I have 20 years…",
+      "bubble": {
+        "x": 760,
+        "y": 250,
+        "tx": 600,
+        "ty": 410,
+        "kind": "whisper",
+        "w": 600
+      }
     },
     {
       "id": "e05_02",
@@ -117,9 +126,18 @@
       "who": "LORIA",
       "voz": "A",
       "at": 2.8,
-      "dur": 2.51,
+      "dur": 2.6,
       "text": "¡I have 20 years! ¡I have 20 years!",
-      "note": "Como loro, chillón y feliz"
+      "note": "Como loro, chillón y feliz",
+      "show": "¡I HAVE 20 YEARS! / ¡I HAVE 20 YEARS!",
+      "bubble": {
+        "x": 820,
+        "y": 270,
+        "tx": 1230,
+        "ty": 370,
+        "kind": "shout",
+        "w": 900
+      }
     },
     {
       "id": "e05_03",
@@ -127,9 +145,37 @@
       "who": "LORIA",
       "voz": "A",
       "at": 8.0,
-      "dur": 7.3,
-      "text": "Perdón. Se dice «I am 20 years old». En inglés la edad va con el verbo «to be», no con «tener».",
-      "note": "Ya con gafas: calmada, profesora amable"
+      "dur": 2.5,
+      "text": "¡Ups! Perdón…",
+      "note": "Ya con gafas: calmada, profesora amable",
+      "show": "¡Ups! Perdón… 🤓",
+      "bubble": {
+        "x": 900,
+        "y": 250,
+        "tx": 1200,
+        "ty": 380,
+        "kind": "talk",
+        "w": 620
+      }
+    },
+    {
+      "id": "e05_04",
+      "scene": "E05",
+      "who": "LORIA",
+      "voz": "A",
+      "at": 10.6,
+      "dur": 2.8,
+      "text": "La edad va con el verbo «to be».",
+      "note": "Con gafas",
+      "show": "La edad va con *to be* 😉",
+      "bubble": {
+        "x": 900,
+        "y": 250,
+        "tx": 1200,
+        "ty": 380,
+        "kind": "talk",
+        "w": 780
+      }
     },
     {
       "id": "e06_01",

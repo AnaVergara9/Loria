@@ -12,6 +12,8 @@ import {
   useVideoConfig,
 } from 'remotion';
 import {BODY, HAND, TITLE} from '../fonts';
+import {Bubble, BubbleKind} from './Bubble';
+import {GLOBOS, VOCES} from '../config';
 import dialogue from '../dialogue.json';
 import {C} from '../theme';
 import {s, SCENES} from '../timeline';
@@ -53,7 +55,17 @@ export const Sfx: React.FC<{name: SfxName; at: number; volume?: number}> = ({nam
   </Sequence>
 );
 
-type Line = {id: string; scene: string; who: string; voz: string; at: number; dur: number; text: string};
+type Line = {
+  id: string;
+  scene: string;
+  who: string;
+  voz: string;
+  at: number;
+  dur: number;
+  text: string;
+  show?: string; // texto corto para el globo (con marcas ~ + *)
+  bubble?: {x: number; y: number; tx: number; ty: number; kind?: BubbleKind; w?: number; label?: boolean};
+};
 const LINES = (dialogue as {lines: Line[]}).lines;
 
 const findFile = (prefix: string) => {
@@ -87,7 +99,8 @@ export const Scene: React.FC<{id: string; children: React.ReactNode; subs?: bool
   return (
     <AbsoluteFill style={{background: bg, overflow: 'hidden'}}>
       <AbsoluteFill style={{transform: cam, transformOrigin: '50% 45%'}}>{children}</AbsoluteFill>
-      {lines.map((l) => {
+      {VOCES &&
+        lines.map((l) => {
         const file = findFile(`voces/${l.id}.`);
         return file ? (
           <Sequence key={l.id} from={s(l.at)} layout="none">
@@ -98,7 +111,11 @@ export const Scene: React.FC<{id: string; children: React.ReactNode; subs?: bool
       {subs &&
         lines.map((l) => (
           <Sequence key={'sub' + l.id} from={s(l.at)} durationInFrames={s(l.dur)}>
-            <Subtitle who={l.who} text={l.text} />
+            {GLOBOS && l.bubble ? (
+              <Bubble {...l.bubble} text={l.show ?? l.text} dur={l.dur} who={l.bubble.label ? l.who : undefined} />
+            ) : (
+              <Subtitle who={l.who} text={l.text} />
+            )}
           </Sequence>
         ))}
     </AbsoluteFill>

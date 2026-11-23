@@ -82,6 +82,7 @@ LINES = {
         parts=[('Perdón. Se dice:', ES), ('I am twenty years old.', EN), ('En inglés, la edad va con el verbo', ES), ('to be.', EN), ('No con tener.', ES)],
         cast='LORIA_GAFAS',
     ),
+    'e05_04': dict(parts=[('La edad va con el verbo', ES), ('to be.', EN)], cast='LORIA_GAFAS'),
     'e06_01': dict(parts=[('¡Escríbele en inglés o en francés, y Loria te corrige y te explica en español!', ES)], speed=1.2),
     'e07_01': dict(parts=[('¡Pero espera, hay más!', ES)]),
     'e08_01': dict(parts=[('¿No quieres escribir? ¡Háblale!', ES)]),

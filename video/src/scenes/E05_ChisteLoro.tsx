@@ -3,6 +3,7 @@ import {Loria} from '../characters/Loria';
 import {CAMILA, Person} from '../characters/Person';
 import {blinkAt, Cam, Pos, Scene, Sfx, SlamText, Sparkle, talkAmount, tw, useT} from '../components/core';
 import {Phone} from '../components/Phone';
+import {Ono} from '../components/Bubble';
 import {Counter, StudioBG} from '../components/Studio';
 import {C} from '../theme';
 
@@ -80,6 +81,12 @@ export const E05_ChisteLoro: React.FC = () => {
         </div>
       )}
       <Sparkle at={GLASSES + 0.3} x={1440} y={420} size={160} />
+      {/* onomatopeyas */}
+      <Ono at={0.05} text="¡FIUUU!" x={330} y={260} size={90} burst={C.blue} dur={0.7} rot={-8} />
+      <Ono at={STOP} text="¡ÑIIIC!" x={1480} y={800} size={140} dur={0.8} />
+      <Ono at={STOP + 0.5} text="cri… cri…" x={1480} y={190} size={96} color="#fff" noBurst dur={1.3} rot={4} />
+      <Ono at={GLASSES + 0.25} text="¡DING!" x={1640} y={210} size={110} burst={C.yellow} color="#fff" dur={0.8} rot={10} />
+      <Ono at={SLAM + 0.1} text="¡TA-DÁ!" x={1620} y={880} size={80} burst={C.green} dur={1.2} rot={-6} />
       <SlamText at={SLAM} size={110} color={C.yellow}>
         Loria no solo repite.
         <br />
