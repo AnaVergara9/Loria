@@ -208,7 +208,7 @@ const Subtitle: React.FC<{who: string; text: string}> = ({who, text}) => {
  * Musica de fondo: el archivo de audio que este dentro de public/music/ suena en todo el video.
  * Baja sola de volumen (a "duck") mientras alguien habla, para que se entiendan las voces.
  */
-export const Music: React.FC<{volume?: number; duck?: number}> = ({volume = 0.3, duck = 0.35}) => {
+export const Music: React.FC<{volume?: number; duck?: number}> = ({volume = 0.45, duck = VOCES ? 0.35 : 1}) => {
   let file;
   try {
     file = getStaticFiles().find((f) => f.name.startsWith('music/') && /\.(mp3|wav|m4a|aac|ogg)$/i.test(f.name));

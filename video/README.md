@@ -42,44 +42,28 @@ Para exportar solo una escena (por ejemplo la E05):
 npx remotion render E05 out/escena-05.mp4
 ```
 
-## 4. Las voces
+## 4. Sin voces: globos de cómic
 
-El video **ya trae todas las voces**, generadas con voz sintética (IA) usando **Kokoro**,
-un sintetizador de voz gratuito que funciona sin internet. Están en `public/voces/` (`e00_01.wav`, `e01_01.wav`...).
-Cada personaje tiene su voz: Loria más aguda y rápida (más todavía cuando repite como loro y más calmada con gafas),
-Camila, el jefe, la colega, el niño, Andrés, doña Marta y Loria bebé.
+El video **no tiene voces**: los diálogos salen en **globos de cómic** junto a cada personaje,
+y hay **onomatopeyas** (¡BOING!, ¡ÑIIIC!, ¡DING!...) que acompañan los efectos de sonido.
+En el "antes" en blanco y negro los globos son carteles de **cine mudo**, y en el modo niños tienen letra de crayón.
 
-**Si quieren usar sus propias voces**: graben las frases de `GUION_VOCES.md` y guarden cada una en `public/voces/`
-con el mismo nombre (por ejemplo `e05_03.wav`; también sirve `.mp3` o `.m4a`, pero borren el `.wav` viejo de esa frase).
-El video la pone sola en el momento justo.
-
-**Para volver a generar las voces con IA** (por ejemplo, si cambian un diálogo):
-
-```bash
-pip install kokoro-onnx soundfile
-```
-
-Descarguen `kokoro-v1.0.fp16.onnx` y `voices-v1.0.bin` de
-https://github.com/thewh1teagle/kokoro-onnx/releases/tag/model-files-v1.0 a una carpeta, y luego:
-
-```bash
-python3 tools/make_voices.py CARPETA_DONDE_ESTAN_LOS_DOS_ARCHIVOS
-```
-
-En `tools/make_voices.py` está la voz de cada personaje (tono y velocidad) y cómo se pronuncia cada frase.
-El programa también ajusta en `src/dialogue.json` cuánto dura cada subtítulo, para que la boca se mueva solo mientras se habla.
-
-Los **subtítulos** siempre aparecen. Si cambian una frase, cámbienla en `src/dialogue.json` (subtítulo)
-y en `tools/make_voices.py` (lo que se pronuncia).
+- Los globos se configuran en `src/dialogue.json`: `show` es el texto del globo y `bubble` dice dónde va
+  (`x`, `y` = borde del globo; `tx`, `ty` = punta de la colita; `kind` = talk, shout, whisper, silent o crayon).
+  En `show`: `~palabra~` sale roja tachada, `+palabra+` verde grande, `*palabra*` resaltada y ` / ` es un salto de línea.
+- Interruptores en `src/config.ts`: `VOCES` (encender las voces de `public/voces/`) y `GLOBOS` (globos o subtítulos).
+- Las voces con IA de una versión anterior siguen en `public/voces/` y en `tools/make_voices.py`, por si algún día las quieren.
 
 ## 5. La música
 
-`public/music/musica-loria.wav` es música generada por el programa `tools/make_music.py` (sin derechos de autor).
-Va con cada parte del video: drama suave en el "antes", teletienda alegre, xilófono en el modo niños y un remate al final.
-**Baja de volumen sola cuando alguien habla.**
+`public/music/musica.wav` es la canción **"Game Show" de kulakovka** (Pixabay, uso libre), ajustada al video con
+`tools/fit_music.py`:
+- La alarga a 3:00 exactos repitiendo un tramo en un punto donde suena casi igual (no se nota el salto),
+  así su final coincide con el cierre del video.
+- En el "antes" en blanco y negro (0:03–0:28) suena como **radio vieja** (filtrada y más baja); cuando llega Loria a color, entra completa.
 
-Para usar otra canción libre de derechos: borren ese archivo y pongan la suya en `public/music/` (solo un archivo).
-Para cambiar el volumen: en `src/Video.tsx` cambien `<Music />` por `<Music volume={0.4} />` (0 = nada, 1 = máximo).
+Para usar otra canción: `python3 tools/fit_music.py LA_CANCION.mp3` (reemplaza `public/music/musica.wav`).
+Para cambiar el volumen: en `src/Video.tsx` cambien `<Music />` por `<Music volume={0.6} />` (0 = nada, 1 = máximo).
 
 ## 6. Efectos de sonido
 
@@ -111,10 +95,13 @@ Los creó el programa `tools/make_sfx.py`. Si consiguen uno mejor, **reemplacen 
 | `src/components/EndCard.tsx` | El código QR (lleva a t.me/loriaabot) y el usuario **@loriaabot**. |
 | `src/scenes/E00_Gancho.tsx` ... `E14_Final.tsx` | **Una escena por archivo.** Puedes cambiar una sin tocar las demás. Arriba de cada archivo hay un comentario con lo que pasa en la escena. |
 | `src/scenes/index.ts` | Conecta cada escena (E00, E01...) con su archivo. |
-| `public/` | Archivos que usa el video: letras, efectos de sonido, QR, voces (`voces/`) y música (`music/`). |
+| `public/` | Archivos que usa el video: letras, efectos de sonido, QR, música (`music/`) y las voces apagadas (`voces/`). |
 | `tools/make_sfx.py` | Vuelve a crear los efectos de sonido. |
 | `tools/make_voices.py` | Genera las voces de todos los personajes con IA (Kokoro). |
-| `tools/make_music.py` | Genera la música de fondo. |
+| `tools/fit_music.py` | Ajusta una canción a los 3:00 del video y le pone el efecto de radio vieja al blanco y negro. |
+| `tools/cancion-original.mp3` | La canción original ("Game Show", kulakovka, Pixabay). |
+| `src/components/Bubble.tsx` | Los globos de cómic y las onomatopeyas. |
+| `src/config.ts` | Interruptores: voces sí/no, globos sí/no. |
 | `tools/voice_list.py` | Vuelve a crear `GUION_VOCES.md` si cambian los diálogos. |
 | `tools/stills.mjs` / `tools/sheet.py` | Sacan imágenes de prueba de varias escenas a la vez (para revisar sin ver todo el video). |
 | `GUION_VOCES.md` | La lista numerada de frases para grabar. |
