@@ -1,4 +1,5 @@
 import React from 'react';
+import {Ono} from '../components/Bubble';
 import {AbsoluteFill, useCurrentFrame} from 'remotion';
 import {Loria} from '../characters/Loria';
 import {Person} from '../characters/Person';
@@ -81,6 +82,8 @@ export const E10_ModoNinos: React.FC = () => {
       <Sfx name="crayon" at={MSG} />
       <Sfx name="applause" at={MSG + 1} volume={0.35} />
       <Sfx name="rewind" at={REW} />
+      <Ono at={HATCH} text="¡CRAC!" x={1500} y={330} size={100} burst={C.yellow} dur={0.8} rot={8} />
+      <Ono at={GROW1} text="¡PUF!" x={1500} y={330} size={90} burst={C.blue} dur={0.7} rot={-6} />
     </Scene>
   );
 };

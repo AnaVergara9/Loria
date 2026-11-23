@@ -1,4 +1,5 @@
 import React from 'react';
+import {Ono} from '../components/Bubble';
 import {AbsoluteFill} from 'remotion';
 import {Loria} from '../characters/Loria';
 import {CAMILA, CAMILA_PJ, Person} from '../characters/Person';
@@ -53,6 +54,9 @@ export const E08_NotasVoz: React.FC = () => {
       <Sfx name="stamp" at={E0 + 0.2} volume={0.5} />
       <Sfx name="stamp" at={E0 + 1.0} volume={0.5} />
       <Sfx name="applause" at={E0 + 1.2} volume={0.35} />
+      <Ono at={TREE} text="¡TOING!" x={560} y={160} size={90} burst={C.green} dur={0.8} rot={-8} />
+      <Ono at={GL - 0.2} text="¡ÑIIIC!" x={420} y={850} size={100} dur={0.6} />
+      <Ono at={GL + 0.25} text="¡DING!" x={1680} y={240} size={100} burst={C.yellow} color="#fff" dur={0.8} rot={10} />
     </Scene>
   );
 };

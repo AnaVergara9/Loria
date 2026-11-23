@@ -109,7 +109,9 @@ export const Scene: React.FC<{id: string; children: React.ReactNode; subs?: bool
         ) : null;
       })}
       {subs &&
-        lines.map((l) => (
+        lines
+          .filter((l) => !(GLOBOS && l.show === ''))
+          .map((l) => (
           <Sequence key={'sub' + l.id} from={s(l.at)} durationInFrames={s(l.dur)}>
             {GLOBOS && l.bubble ? (
               <Bubble {...l.bubble} text={l.show ?? l.text} dur={l.dur} who={l.bubble.label ? l.who : undefined} />

@@ -1,4 +1,5 @@
 import React from 'react';
+import {Ono} from '../components/Bubble';
 import {AbsoluteFill} from 'remotion';
 import {Loria} from '../characters/Loria';
 import {blinkAt, BODY, Cam, Confetti, Pos, Scene, Sfx, SlamText, Sparkle, talkAmount, TITLE, tw, useT} from '../components/core';
@@ -73,7 +74,7 @@ export const E11_Botones: React.FC = () => {
         </Pos>
         {/* tarjetica de pronunciacion en Ejercicios */}
         {active === 1 && (
-          <div style={{position: 'absolute', left: 1080, top: 90, transform: `scale(${Math.min(1, (t - PRESS[1] - 0.3) / 0.2)}) rotate(-4deg)`, background: C.cream, border: `7px solid ${C.outline}`, borderRadius: 26, padding: '16px 28px', fontFamily: BODY, fontWeight: 800, fontSize: 46, color: C.outline, boxShadow: `0 8px 0 ${C.outline}`}}>
+          <div style={{position: 'absolute', left: 140, top: 880, transform: `scale(${Math.min(1, (t - PRESS[1] - 0.3) / 0.2)}) rotate(-2deg)`, background: C.cream, border: `7px solid ${C.outline}`, borderRadius: 26, padding: '16px 28px', fontFamily: BODY, fontWeight: 800, fontSize: 46, color: C.outline, boxShadow: `0 8px 0 ${C.outline}`}}>
             🔊 Escucha cómo se pronuncia
           </div>
         )}
@@ -94,6 +95,9 @@ export const E11_Botones: React.FC = () => {
       ))}
       <Sfx name="stamp" at={FINAL + 0.1} />
       <Sfx name="fanfare" at={FINAL + 0.2} volume={0.5} />
+      {PRESS.map((p, i) => (
+        <Ono key={'o' + i} at={p} text="¡CLIC!" x={900} y={215 + i * 234} size={70} burst={C.yellow} dur={0.5} rot={-8} />
+      ))}
     </Scene>
   );
 };

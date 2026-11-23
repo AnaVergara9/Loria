@@ -1,4 +1,5 @@
 import React from 'react';
+import {Ono} from '../components/Bubble';
 import {AbsoluteFill} from 'remotion';
 import {CAMILA, MESERO, Person} from '../characters/Person';
 import {blinkAt, Cam, Pos, Scene, Sfx, SlamText, talkAmount, tw, usePop, useT} from '../components/core';
@@ -142,6 +143,8 @@ export const E02_Montaje: React.FC = () => {
         ¿TE SUENA?
       </SlamText>
       <Sfx name="stamp" at={SPLIT + 1.8} volume={0.6} />
+      <Ono at={CUT1 + 1.3} text="¿¡EH!?" x={1640} y={820} size={90} burst="#9C6ADE" dur={0.9} rot={6} />
+      <Ono at={CUT2 + 1.5} text="¡CLIC!" x={1640} y={980} size={80} burst={C.yellow} dur={0.6} />
     </Scene>
   );
 };

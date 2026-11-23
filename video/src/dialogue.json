@@ -7,29 +7,56 @@
       "who": "LORIA",
       "voz": "A",
       "at": 0.2,
-      "dur": 2.1,
+      "dur": 2.4,
       "text": "¿Hablas inglés? ¿Sí? ¡A ver, a ver!",
-      "note": "Pícara, como retando"
+      "note": "Pícara, como retando",
+      "show": "¿Hablas inglés? ¿Sí? / ¡A ver, a ver! 😏",
+      "bubble": {
+        "x": 1320,
+        "y": 330,
+        "tx": 900,
+        "ty": 560,
+        "kind": "talk",
+        "w": 640
+      }
     },
     {
       "id": "e01_01",
       "scene": "E01",
       "who": "JEFE",
       "voz": "A",
-      "at": 0.6,
-      "dur": 1.57,
+      "at": 1.1,
+      "dur": 1.3,
       "text": "How old are you?",
-      "note": "Voz grave y seria"
+      "note": "Voz grave y seria",
+      "show": "\"How old are you?\"",
+      "bubble": {
+        "x": 1250,
+        "y": 330,
+        "tx": 720,
+        "ty": 700,
+        "kind": "silent",
+        "w": 620
+      }
     },
     {
       "id": "e01_02",
       "scene": "E01",
       "who": "CAMILA",
       "voz": "B",
-      "at": 2.4,
-      "dur": 1.51,
+      "at": 2.45,
+      "dur": 1.85,
       "text": "I have 20 years!",
-      "note": "Muy segura, orgullosa"
+      "note": "Muy segura, orgullosa",
+      "show": "\"I have 20 years!\"",
+      "bubble": {
+        "x": 620,
+        "y": 330,
+        "tx": 1250,
+        "ty": 760,
+        "kind": "silent",
+        "w": 620
+      }
     },
     {
       "id": "e02_01",
@@ -37,9 +64,18 @@
       "who": "CAMILA",
       "voz": "B",
       "at": 0.3,
-      "dur": 1.69,
+      "dur": 2.1,
       "text": "Je suis… ¿un croissant?",
-      "note": "Dudando"
+      "note": "Dudando",
+      "show": "\"Je suis… ¿un croissant?\" 🥐",
+      "bubble": {
+        "x": 700,
+        "y": 300,
+        "tx": 620,
+        "ty": 540,
+        "kind": "silent",
+        "w": 640
+      }
     },
     {
       "id": "e02_02",
@@ -47,9 +83,18 @@
       "who": "CAMILA",
       "voz": "B",
       "at": 2.7,
-      "dur": 1.37,
+      "dur": 1.9,
       "text": "Where is the baño?",
-      "note": "Apurada"
+      "note": "Apurada",
+      "show": "\"Where is the… ¿baño?\" 🚽",
+      "bubble": {
+        "x": 560,
+        "y": 330,
+        "tx": 880,
+        "ty": 560,
+        "kind": "silent",
+        "w": 640
+      }
     },
     {
       "id": "e02_03",
@@ -57,9 +102,18 @@
       "who": "COLEGA",
       "voz": "A",
       "at": 5.1,
-      "dur": 1.85,
+      "dur": 1.8,
       "text": "Any questions, Camila?",
-      "note": "Voz de oficina, neutra"
+      "note": "Voz de oficina, neutra",
+      "show": "\"Any questions, Camila?\"",
+      "bubble": {
+        "x": 1000,
+        "y": 300,
+        "tx": 560,
+        "ty": 380,
+        "kind": "silent",
+        "w": 600
+      }
     },
     {
       "id": "e03_01",
@@ -97,9 +151,18 @@
       "who": "LORIA",
       "voz": "A",
       "at": 1.4,
-      "dur": 2.41,
+      "dur": 2.6,
       "text": "¡No sufras más! ¡Ya llegó Loria!",
-      "note": "Presentadora de teletienda, muy energética"
+      "note": "Presentadora de teletienda, muy energética",
+      "show": "¡No sufras más! / ¡Ya llegó Loria! 🎉",
+      "bubble": {
+        "x": 720,
+        "y": 330,
+        "tx": 1200,
+        "ty": 440,
+        "kind": "shout",
+        "w": 760
+      }
     },
     {
       "id": "e05_01",
@@ -183,9 +246,18 @@
       "who": "LORIA",
       "voz": "A",
       "at": 0.3,
-      "dur": 4.78,
-      "text": "¡Escríbele en inglés o en francés, y Loria te corrige y te explica en español!",
-      "note": "Rápido, vendedora"
+      "dur": 2.3,
+      "text": "¡Escríbeme en inglés o en francés!",
+      "note": "Rápido, vendedora",
+      "show": "¡Escríbeme en inglés / o en francés! ✍️",
+      "bubble": {
+        "x": 1380,
+        "y": 330,
+        "tx": 1420,
+        "ty": 640,
+        "kind": "talk",
+        "w": 560
+      }
     },
     {
       "id": "e07_01",
@@ -203,9 +275,18 @@
       "who": "LORIA",
       "voz": "A",
       "at": 0.3,
-      "dur": 1.99,
-      "text": "¿No quieres escribir? ¡Háblale!",
-      "note": "Energética"
+      "dur": 2.3,
+      "text": "¿No quieres escribir? ¡Háblame!",
+      "note": "Energética",
+      "show": "¿No quieres escribir? / ¡Háblame! 🎙️",
+      "bubble": {
+        "x": 1350,
+        "y": 300,
+        "tx": 930,
+        "ty": 640,
+        "kind": "talk",
+        "w": 600
+      }
     },
     {
       "id": "e08_02",
@@ -215,7 +296,8 @@
       "at": 2.8,
       "dur": 2.56,
       "text": "En el bus, en la cocina… ¡o en pijama!",
-      "note": "Una palabra por cada lugar"
+      "note": "Una palabra por cada lugar",
+      "show": ""
     },
     {
       "id": "e08_03",
@@ -223,9 +305,18 @@
       "who": "CAMILA",
       "voz": "B",
       "at": 7.0,
-      "dur": 1.46,
+      "dur": 2.0,
       "text": "I have tree brothers.",
-      "note": "Grabando nota de voz, tranquila"
+      "note": "Grabando nota de voz, tranquila",
+      "show": "I have tree brothers 🎙️",
+      "bubble": {
+        "x": 470,
+        "y": 280,
+        "tx": 700,
+        "ty": 500,
+        "kind": "talk",
+        "w": 560
+      }
     },
     {
       "id": "e08_04",
@@ -233,9 +324,18 @@
       "who": "LORIA",
       "voz": "A",
       "at": 10.6,
-      "dur": 2.89,
-      "text": "¡Three! Con la lengua entre los dientes.",
-      "note": "Divertida, mostrando"
+      "dur": 3.2,
+      "text": "¡Three! = 3. Lengua entre los dientes.",
+      "note": "Divertida, mostrando",
+      "show": "+THREE+ = 3 / 👅 lengua entre los dientes",
+      "bubble": {
+        "x": 1560,
+        "y": 400,
+        "tx": 1370,
+        "ty": 640,
+        "kind": "talk",
+        "w": 520
+      }
     },
     {
       "id": "e08_05",
@@ -243,9 +343,18 @@
       "who": "CAMILA",
       "voz": "B",
       "at": 15.0,
-      "dur": 2.2,
+      "dur": 2.0,
       "text": "Yesterday I eat pizza.",
-      "note": "Medio dormida, en la cama"
+      "note": "Medio dormida, en la cama",
+      "show": "Yesterday I eat pizza… 😴",
+      "bubble": {
+        "x": 520,
+        "y": 260,
+        "tx": 820,
+        "ty": 430,
+        "kind": "whisper",
+        "w": 600
+      }
     },
     {
       "id": "e08_06",
@@ -253,9 +362,18 @@
       "who": "LORIA",
       "voz": "A",
       "at": 17.2,
-      "dur": 1.33,
+      "dur": 1.5,
       "text": "¡Pizza! ¡Pizza!",
-      "note": "Como loro, emocionada"
+      "note": "Como loro, emocionada",
+      "show": "¡PIZZA! ¡PIZZA! 🍕",
+      "bubble": {
+        "x": 1350,
+        "y": 330,
+        "tx": 930,
+        "ty": 640,
+        "kind": "shout",
+        "w": 620
+      }
     },
     {
       "id": "e08_07",
@@ -263,9 +381,18 @@
       "who": "LORIA",
       "voz": "A",
       "at": 19.6,
-      "dur": 2.73,
+      "dur": 2.7,
       "text": "¡Casi! Se dice «I ate pizza».",
-      "note": "Con gafas, calmada"
+      "note": "Con gafas, calmada",
+      "show": "¡Casi! ~eat~ → +ATE+ ✔",
+      "bubble": {
+        "x": 1100,
+        "y": 300,
+        "tx": 1200,
+        "ty": 650,
+        "kind": "talk",
+        "w": 600
+      }
     },
     {
       "id": "e09_01",
@@ -273,9 +400,18 @@
       "who": "LORIA",
       "voz": "A",
       "at": 1.0,
-      "dur": 2.37,
+      "dur": 2.8,
       "text": "Un momento… ¿y para los más pequeños?",
-      "note": "Curiosa, misteriosa"
+      "note": "Curiosa, misteriosa",
+      "show": "Un momento… / ¿y para los más pequeños? 🤔",
+      "bubble": {
+        "x": 1350,
+        "y": 330,
+        "tx": 960,
+        "ty": 640,
+        "kind": "talk",
+        "w": 640
+      }
     },
     {
       "id": "e10_01",
@@ -285,7 +421,8 @@
       "at": 6.5,
       "dur": 1.23,
       "text": "An apple!",
-      "note": "Voz de niño, feliz"
+      "note": "Voz de niño, feliz",
+      "show": ""
     },
     {
       "id": "e10_02",
@@ -293,9 +430,18 @@
       "who": "LORIA BEBÉ",
       "voz": "A",
       "at": 8.0,
-      "dur": 2.14,
+      "dur": 2.4,
       "text": "¡Muy bien! ¡Ganaste una estrella!",
-      "note": "Vocecita aguda de pollito"
+      "note": "Vocecita aguda de pollito",
+      "show": "¡Muy bien! / ¡Ganaste una ⭐!",
+      "bubble": {
+        "x": 1560,
+        "y": 420,
+        "tx": 1230,
+        "ty": 600,
+        "kind": "crayon",
+        "w": 480
+      }
     },
     {
       "id": "e10_03",
@@ -305,7 +451,8 @@
       "at": 12.0,
       "dur": 1.21,
       "text": "C'est un chat!",
-      "note": "Voz de niño, orgulloso"
+      "note": "Voz de niño, orgulloso",
+      "show": ""
     },
     {
       "id": "e10_04",
@@ -315,7 +462,8 @@
       "at": 16.0,
       "dur": 1.2,
       "text": "Thank you!",
-      "note": "Voz de niño, gritando de alegría"
+      "note": "Voz de niño, gritando de alegría",
+      "show": ""
     },
     {
       "id": "e11_01",
@@ -323,9 +471,18 @@
       "who": "LORIA",
       "voz": "A",
       "at": 0.8,
-      "dur": 1.44,
+      "dur": 2.6,
       "text": "¿Quieres conversar?",
-      "note": "Al ritmo, como presentadora"
+      "note": "Al ritmo, como presentadora",
+      "show": "¿Quieres conversar? 💬",
+      "bubble": {
+        "x": 1250,
+        "y": 300,
+        "tx": 1330,
+        "ty": 640,
+        "kind": "talk",
+        "w": 560
+      }
     },
     {
       "id": "e11_02",
@@ -333,9 +490,18 @@
       "who": "LORIA",
       "voz": "A",
       "at": 4.2,
-      "dur": 1.85,
+      "dur": 2.6,
       "text": "¿Quieres hacer ejercicios?",
-      "note": ""
+      "note": "",
+      "show": "¿Hacer ejercicios? 🏋️",
+      "bubble": {
+        "x": 1250,
+        "y": 300,
+        "tx": 1330,
+        "ty": 640,
+        "kind": "talk",
+        "w": 560
+      }
     },
     {
       "id": "e11_03",
@@ -343,9 +509,18 @@
       "who": "LORIA",
       "voz": "A",
       "at": 7.6,
-      "dur": 1.9,
+      "dur": 2.6,
       "text": "¿O quieres corregir un texto?",
-      "note": ""
+      "note": "",
+      "show": "¿O corregir un texto? ✅",
+      "bubble": {
+        "x": 1250,
+        "y": 300,
+        "tx": 1330,
+        "ty": 640,
+        "kind": "talk",
+        "w": 560
+      }
     },
     {
       "id": "e11_04",
@@ -355,37 +530,65 @@
       "at": 11.0,
       "dur": 1.2,
       "text": "¡Tú eliges!",
-      "note": "Remate, con fuerza"
+      "note": "Remate, con fuerza",
+      "show": ""
     },
     {
       "id": "e12_01",
       "scene": "E12",
       "who": "ANDRÉS, 34",
       "voz": "B",
-      "at": 0.8,
-      "dur": 2.76,
+      "at": 0.6,
+      "dur": 4.2,
       "text": "¡Ahora pido mi croissant en París sin pena!",
-      "note": "Voz de hombre, testimonial de tele"
+      "note": "Voz de hombre, testimonial de tele",
+      "show": "¡Ahora pido mi croissant / en París sin pena! 🥐",
+      "bubble": {
+        "x": 1250,
+        "y": 380,
+        "tx": 850,
+        "ty": 500,
+        "kind": "talk",
+        "w": 700
+      }
     },
     {
       "id": "e12_02",
       "scene": "E12",
       "who": "DOÑA MARTA, 60",
       "voz": "B",
-      "at": 6.8,
-      "dur": 2.3,
+      "at": 6.6,
+      "dur": 3.8,
       "text": "¡Practico inglés con mi nieto!",
-      "note": "Voz de abuelita feliz"
+      "note": "Voz de abuelita feliz",
+      "show": "¡Practico inglés / con mi nieto! 👵👦",
+      "bubble": {
+        "x": 1250,
+        "y": 400,
+        "tx": 790,
+        "ty": 540,
+        "kind": "talk",
+        "w": 640
+      }
     },
     {
       "id": "e12_03",
       "scene": "E12",
       "who": "CAMILA",
       "voz": "B",
-      "at": 12.4,
-      "dur": 3.62,
+      "at": 12.3,
+      "dur": 4.6,
       "text": "¡Conseguí el trabajo! And yes… I am 20 years old!",
-      "note": "Feliz, segura, con orgullo"
+      "note": "Feliz, segura, con orgullo",
+      "show": "¡Conseguí el trabajo! / And yes… +I AM+ 20 years old! 🎉",
+      "bubble": {
+        "x": 1150,
+        "y": 300,
+        "tx": 850,
+        "ty": 500,
+        "kind": "talk",
+        "w": 760
+      }
     },
     {
       "id": "e13_01",
@@ -393,9 +596,18 @@
       "who": "LORIA",
       "voz": "A",
       "at": 0.3,
-      "dur": 2.82,
+      "dur": 3.6,
       "text": "¿Y cuánto cuesta? ¡Nada! ¡Es totalmente gratis!",
-      "note": "Teletienda a tope"
+      "note": "Teletienda a tope",
+      "show": "¿Cuánto cuesta? / ¡NADA! 🤑",
+      "bubble": {
+        "x": 1400,
+        "y": 330,
+        "tx": 1450,
+        "ty": 640,
+        "kind": "talk",
+        "w": 520
+      }
     },
     {
       "id": "e13_02",
@@ -403,9 +615,18 @@
       "who": "LORIA",
       "voz": "A",
       "at": 4.3,
-      "dur": 2.67,
-      "text": "¡Búscala en Telegram como @loriaabot!",
-      "note": "Clara, deletreando un poco"
+      "dur": 3.4,
+      "text": "¡Búscame en Telegram!",
+      "note": "Clara, deletreando un poco",
+      "show": "¡Búscame en / Telegram! 📲",
+      "bubble": {
+        "x": 1500,
+        "y": 330,
+        "tx": 1450,
+        "ty": 640,
+        "kind": "talk",
+        "w": 480
+      }
     },
     {
       "id": "e14_01",
@@ -413,9 +634,18 @@
       "who": "LORIA",
       "voz": "A",
       "at": 0.3,
-      "dur": 2.8,
+      "dur": 2.6,
       "text": "¡I am 20 years old! ¡I am 20 years old!",
-      "note": "Como loro, emocionada"
+      "note": "Como loro, emocionada",
+      "show": "¡I AM 20 YEARS OLD! / ¡I AM 20 YEARS OLD!",
+      "bubble": {
+        "x": 780,
+        "y": 330,
+        "tx": 1180,
+        "ty": 420,
+        "kind": "shout",
+        "w": 820
+      }
     },
     {
       "id": "e14_02",
@@ -423,19 +653,37 @@
       "who": "CAMILA",
       "voz": "B",
       "at": 3.1,
-      "dur": 1.91,
+      "dur": 2.3,
       "text": "Loria… tú no tienes 20 años.",
-      "note": "Seca, divertida"
+      "note": "Seca, divertida",
+      "show": "Loria… tú no tienes / 20 años. 😑",
+      "bubble": {
+        "x": 1180,
+        "y": 300,
+        "tx": 700,
+        "ty": 560,
+        "kind": "talk",
+        "w": 640
+      }
     },
     {
       "id": "e14_03",
       "scene": "E14",
       "who": "LORIA",
       "voz": "A",
-      "at": 6.2,
-      "dur": 3.14,
+      "at": 6.1,
+      "dur": 3.4,
       "text": "Cierto. Tengo dos semanas. Te espero en Telegram.",
-      "note": "Con gafas, calmada y coqueta"
+      "note": "Con gafas, calmada y coqueta",
+      "show": "Cierto. Tengo 2 semanas. 🐣 / ¡Te espero en Telegram! 😉",
+      "bubble": {
+        "x": 700,
+        "y": 330,
+        "tx": 1150,
+        "ty": 420,
+        "kind": "talk",
+        "w": 720
+      }
     }
   ]
 }

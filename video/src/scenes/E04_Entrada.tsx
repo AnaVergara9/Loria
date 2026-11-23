@@ -1,7 +1,9 @@
 import React from 'react';
+import {Ono} from '../components/Bubble';
 import {Loria} from '../characters/Loria';
 import {blinkAt, Cam, Confetti, Pos, Scene, Sfx, talkAmount, tw, usePop, useT} from '../components/core';
 import {Flash} from '../components/effects';
+import {C} from '../theme';
 import {Counter, Logo, StudioBG, Tagline} from '../components/Studio';
 
 // E04 (0:28-0:36) Explosion de color: estudio de teletienda, Loria entra volando y aterriza en el mostrador.
@@ -60,6 +62,9 @@ export const E04_Entrada: React.FC = () => {
       <Sfx name="boing" at={4.45} />
       <Sfx name="pop" at={5.0} />
       <Sfx name="applause" at={5.2} volume={0.4} />
+      <Ono at={0.15} text="¡TA-DÁ!" x={460} y={760} size={110} burst={C.red} dur={1.0} rot={-8} />
+      <Ono at={LAND} text="¡BOING!" x={1700} y={760} size={90} burst={C.green} dur={0.7} rot={8} />
+      <Ono at={4.45} text="¡PLOP!" x={900} y={420} size={90} burst={C.blue} dur={0.6} rot={-4} />
     </Scene>
   );
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import {Ono} from '../components/Bubble';
 import {AbsoluteFill} from 'remotion';
 import {Loria} from '../characters/Loria';
 import {blinkAt, Pos, Scene, Sfx, talkAmount, tw, usePop, useT} from '../components/core';
@@ -51,6 +52,8 @@ export const E00_Gancho: React.FC = () => {
       <Sfx name="whoosh" at={1.65} volume={0.5} />
       <Sfx name="click" at={2.25} />
       <Sfx name="static" at={2.45} volume={0.5} />
+      <Ono at={0.05} text="¡BOING!" x={1500} y={760} size={100} burst={C.green} dur={0.7} rot={8} />
+      <Ono at={2.25} text="¡CLIC!" x={1300} y={600} size={90} burst={C.yellow} dur={0.5} />
     </Scene>
   );
 };

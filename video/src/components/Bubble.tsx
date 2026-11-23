@@ -1,7 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import {C} from '../theme';
-import {BODY, TITLE} from '../fonts';
+import {BODY, HAND, TITLE} from '../fonts';
 
 /**
  * GLOBO DE DIALOGO estilo comic.
@@ -11,7 +11,7 @@ import {BODY, TITLE} from '../fonts';
  *  text   = admite marcas:  ~palabra~ = rojo tachado   +palabra+ = verde grande   *palabra* = resaltada
  * Las palabras aparecen una por una, como si se dijeran.
  */
-export type BubbleKind = 'talk' | 'shout' | 'whisper';
+export type BubbleKind = 'talk' | 'shout' | 'whisper' | 'silent' | 'crayon';
 
 export const Bubble: React.FC<{
   x: number;
@@ -23,7 +23,9 @@ export const Bubble: React.FC<{
   kind?: BubbleKind;
   w?: number;
   who?: string;
-}> = ({x, y, tx, ty, text, dur, kind = 'talk', w = 640, who}) => {
+}> = ({x: x0, y, tx, ty, text, dur, kind = 'talk', w: w0 = 640, who}) => {
+  const w = Math.min(1500, w0 * 1.3);
+  const x = Math.max(w / 2 + 20, Math.min(1900 - w / 2, x0)); // siempre dentro de la pantalla
   const f = useCurrentFrame();
   const {fps} = useVideoConfig();
   const t = f / fps;
@@ -36,10 +38,13 @@ export const Bubble: React.FC<{
   const shown = Math.min(totalWords, Math.floor(t * 9) + 1); // 9 palabras por segundo
   const shout = kind === 'shout';
   const whisper = kind === 'whisper';
-  const fs = shout ? 80 : whisper ? 54 : 66;
+  const silent = kind === 'silent'; // cine mudo: carton negro, letra clasica
+  const crayon = kind === 'crayon'; // modo ninos: letra a mano
+  const fill = silent ? '#111' : whisper ? '#F4F1EA' : crayon ? '#FFFDF4' : '#fff';
+  const fs = shout ? 70 : whisper ? 50 : 58;
   const shakeX = shout ? Math.sin(f * 2.1) * 4 : 0;
   const shakeY = shout ? Math.cos(f * 1.7) * 3 : 0;
-  const border = shout ? '#E2342A' : C.outline;
+  const border = shout ? '#E2342A' : silent ? '#F2EDE0' : crayon ? '#5A3A1A' : C.outline;
   const bx = Math.max(x - w / 2 + 50, Math.min(x + w / 2 - 50, tx));
   const by = y + (down ? -6 : 6);
   let count = 0;
@@ -50,7 +55,7 @@ export const Bubble: React.FC<{
         <g transform={`translate(${tx} ${ty}) scale(${sc}) translate(${-tx} ${-ty})`}>
           <path
             d={`M${bx - 34} ${by} Q${(bx + tx) / 2 - 10} ${(by + ty) / 2} ${tx} ${ty} Q${(bx + tx) / 2 + 22} ${(by + ty) / 2} ${bx + 34} ${by} Z`}
-            fill={whisper ? '#F4F1EA' : '#fff'}
+            fill={fill}
             stroke={border}
             strokeWidth={8}
             strokeLinejoin="round"
@@ -72,16 +77,18 @@ export const Bubble: React.FC<{
       >
         <div
           style={{
-            background: whisper ? '#F4F1EA' : '#fff',
+            background: fill,
             border: `${shout ? 10 : 8}px ${whisper ? 'dashed' : 'solid'} ${border}`,
-            borderRadius: shout ? 24 : 46,
-            padding: shout ? '18px 34px 10px' : '16px 32px 10px',
+            borderRadius: shout ? 24 : silent ? 10 : 46,
+            outline: silent ? '3px solid #F2EDE0' : undefined,
+            outlineOffset: silent ? -18 : undefined,
+            padding: shout ? '18px 34px 10px' : silent ? '26px 46px 22px' : '16px 32px 10px',
             boxShadow: `0 10px 0 ${shout ? '#7A1A12' : 'rgba(42,9,4,0.35)'}`,
-            fontFamily: shout ? TITLE : BODY,
+            fontFamily: shout ? TITLE : silent ? 'Georgia, "Times New Roman", serif' : crayon ? HAND : BODY,
             fontWeight: 800,
             fontSize: fs,
             lineHeight: 1.12,
-            color: whisper ? '#6B5A50' : C.outline,
+            color: silent ? '#F2EDE0' : whisper ? '#6B5A50' : crayon ? '#2F7CC0' : C.outline,
             textAlign: 'center',
             letterSpacing: shout ? 1 : 0,
             fontStyle: whisper ? 'italic' : 'normal',

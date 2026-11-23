@@ -1,4 +1,5 @@
 import React from 'react';
+import {Ono} from '../components/Bubble';
 import {AbsoluteFill} from 'remotion';
 import {ANDRES, CAMILA_SUIT, JEFE, MARTA, Person} from '../characters/Person';
 import {blinkAt, BODY, Cam, Confetti, Pos, Scene, Sfx, talkAmount, TITLE, tw, useT} from '../components/core';
@@ -64,6 +65,7 @@ export const E12_Testimonios: React.FC = () => {
       <Sfx name="applause" at={10.0} volume={0.35} />
       <Sfx name="fanfare" at={14.6} volume={0.5} />
       <Sfx name="applause" at={14.7} volume={0.6} />
+      <Ono at={14.6} text="¡YUJUUU!" x={330} y={260} size={100} burst={C.green} dur={1.4} rot={-6} />
     </Scene>
   );
 };

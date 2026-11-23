@@ -1,4 +1,5 @@
 import React from 'react';
+import {Ono} from '../components/Bubble';
 import {AbsoluteFill} from 'remotion';
 import {Loria} from '../characters/Loria';
 import {blinkAt, Cam, Pos, Scene, Sfx, SlamText, talkAmount, tw, usePop, useT} from '../components/core';
@@ -63,6 +64,8 @@ export const E06_Escribele: React.FC = () => {
       <Sfx name="ding" at={9.05} />
       <Sfx name="stamp" at={END + 0.2} volume={0.5} />
       <Sfx name="applause" at={END + 0.4} volume={0.35} />
+      <Ono at={2.8} text="¡ZAS!" x={1060} y={560} size={90} dur={0.6} rot={-10} />
+      <Ono at={8.6} text="¡ZAS!" x={1060} y={560} size={90} dur={0.6} rot={10} />
     </Scene>
   );
 };

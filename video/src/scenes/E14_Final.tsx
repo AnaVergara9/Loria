@@ -1,10 +1,12 @@
 import React from 'react';
+import {Ono} from '../components/Bubble';
 import {AbsoluteFill} from 'remotion';
 import {Loria} from '../characters/Loria';
 import {CAMILA_SUIT, Person} from '../characters/Person';
 import {blinkAt, Cam, Confetti, Pos, Scene, Sfx, Sparkle, talkAmount, tw, usePop, useT} from '../components/core';
 import {QRBox} from '../components/EndCard';
 import {Counter, Logo, StudioBG, Tagline} from '../components/Studio';
+import {C} from '../theme';
 
 // E14 (2:48-3:00) Ultimo chiste (vez 3 de 3): Loria repite "I am 20 years old!" emocionada,
 // Camila: "Loria... tu no tienes 20 anos." Gafas + ding: "Cierto. Tengo dos semanas. Te espero en Telegram."
@@ -69,6 +71,9 @@ export const E14_Final: React.FC = () => {
       <Sfx name="whoosh" at={CARD - 0.1} />
       <Sfx name="fanfare" at={CARD} />
       <Sfx name="applause" at={CARD + 0.2} volume={0.6} />
+      <Ono at={STOP} text="¡ÑIIIC!" x={1500} y={860} size={110} dur={0.7} />
+      <Ono at={STOP + 0.6} text="cri… cri…" x={330} y={200} size={90} color="#fff" noBurst dur={1.4} rot={4} />
+      <Ono at={GL + 0.25} text="¡DING!" x={1680} y={230} size={110} burst={C.yellow} color="#fff" dur={0.8} rot={10} />
     </Scene>
   );
 };

@@ -1,4 +1,5 @@
 import React from 'react';
+import {Ono} from '../components/Bubble';
 import {AbsoluteFill} from 'remotion';
 import {Loria} from '../characters/Loria';
 import {blinkAt, Confetti, Pos, Scene, Sfx, SlamText, talkAmount, TITLE, tw, usePop, useT} from '../components/core';
@@ -53,6 +54,8 @@ export const E13_Oferta: React.FC = () => {
       <Sfx name="applause" at={FREE + 0.1} volume={0.6} />
       <Sfx name="pop" at={QR} />
       <Sfx name="ding" at={QR + 0.1} volume={0.5} />
+      <Ono at={STRIKE} text="¡ZAS!" x={980} y={420} size={90} dur={0.6} rot={-8} />
+      <Ono at={FREE} text="¡KA-CHING!" x={1180} y={880} size={90} burst={C.green} dur={1.2} rot={6} />
     </Scene>
   );
 };

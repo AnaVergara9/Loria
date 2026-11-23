@@ -1,4 +1,5 @@
 import React from 'react';
+import {Ono} from '../components/Bubble';
 import {AbsoluteFill, Freeze, interpolate} from 'remotion';
 import {Loria} from '../characters/Loria';
 import {blinkAt, Cam, Pos, Scene, Sfx, talkAmount, tw, usePop, useT} from '../components/core';
@@ -46,13 +47,14 @@ export const E09_Rebobinado: React.FC = () => {
             </Pos>
           </Cam>
           {t > STOP + 0.9 && (
-            <div style={{position: 'absolute', left: 1240, top: 140, transform: `scale(${q}) rotate(12deg)`, fontFamily: 'Arial Black', fontSize: 220, color: C.yellow, WebkitTextStroke: `10px ${C.outline}`}}>?</div>
+            <div style={{position: 'absolute', left: 430, top: 150, transform: `scale(${q}) rotate(12deg)`, fontFamily: 'Arial Black', fontSize: 220, color: C.yellow, WebkitTextStroke: `10px ${C.outline}`}}>?</div>
           )}
         </AbsoluteFill>
       )}
       <Sfx name="rewind" at={0} />
       <Sfx name="pop" at={STOP} />
       <Sfx name="pop" at={STOP + 0.9} volume={0.6} />
+      <Ono at={STOP} text="¡CLAC!" x={1560} y={850} size={100} burst={C.yellow} dur={0.6} rot={-6} />
     </Scene>
   );
 };

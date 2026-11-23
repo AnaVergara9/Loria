@@ -204,3 +204,20 @@ export const CornerTag: React.FC<{text: string; at?: number}> = ({text, at = 0})
     </div>
   );
 };
+
+/** Cartel de cine mudo (fondo negro, marco decorado, letra clasica). */
+export const SilentCard: React.FC<{from: number; to: number; text: React.ReactNode}> = ({from, to, text}) => {
+  const t = useT();
+  if (t < from || t > to) return null;
+  const o = Math.min(tw(t, [from, from + 0.1], [0, 1]), tw(t, [to - 0.12, to], [1, 0]));
+  return (
+    <AbsoluteFill style={{background: '#0B0B0B', opacity: o, justifyContent: 'center', alignItems: 'center'}}>
+      <div style={{position: 'absolute', inset: 60, border: '6px solid #E9E2D0', outline: '2px solid #E9E2D0', outlineOffset: -22, borderRadius: 20}} />
+      {[[90, 90], [1830, 90], [90, 990], [1830, 990]].map(([x, y], i) => (
+        <div key={i} style={{position: 'absolute', left: x - 22, top: y - 22, width: 44, height: 44, transform: 'rotate(45deg)', border: '5px solid #E9E2D0'}} />
+      ))}
+      <div style={{fontFamily: 'Georgia, "Times New Roman", serif', fontStyle: 'italic', fontSize: 96, color: '#F2EDE0', textAlign: 'center', lineHeight: 1.25, padding: '0 200px'}}>{text}</div>
+      <Noise opacity={0.25} />
+    </AbsoluteFill>
+  );
+};

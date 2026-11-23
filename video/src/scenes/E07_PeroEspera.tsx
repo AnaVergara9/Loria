@@ -1,4 +1,5 @@
 import React from 'react';
+import {Ono} from '../components/Bubble';
 import {AbsoluteFill} from 'remotion';
 import {Loria} from '../characters/Loria';
 import {Cam, Pos, Scene, Sfx, shake, SlamText, talkAmount, tw, useT} from '../components/core';
@@ -33,6 +34,7 @@ export const E07_PeroEspera: React.FC = () => {
       <Sfx name="siren" at={0.15} volume={0.6} />
       <Sfx name="stamp" at={0.5} />
       <Sfx name="drumroll" at={2.4} volume={0.6} />
+      <Ono at={0.2} text="¡UIUIUI!" x={1560} y={900} size={90} burst={C.yellow} color="#E2342A" dur={1.6} rot={6} />
     </Scene>
   );
 };
