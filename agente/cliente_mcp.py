@@ -21,7 +21,8 @@ log = logging.getLogger("cliente_mcp")
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # carpeta del proyecto
 
 # Estos parámetros los llena el bot, nunca el modelo: se quitan de lo que el modelo ve.
-PARAMETROS_DE_CONTEXTO = {"user_id", "ruta_audio", "transcripcion", "tiempo_max", "evitar_modelos"}
+PARAMETROS_DE_CONTEXTO = {"user_id", "ruta_audio", "transcripcion", "transcripcion_ingles", "tiempo_max",
+                          "evitar_modelos"}
 
 
 class ClienteMCP:

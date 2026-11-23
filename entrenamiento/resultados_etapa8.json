@@ -1,0 +1,73 @@
+{
+  "frases_entrenamiento": 2250,
+  "frases_validacion": 250,
+  "frases_prueba": 2500,
+  "epocas": 30,
+  "elegida": "v1+v2",
+  "variantes": {
+    "h": [
+      "x"
+    ],
+    "i": [
+      "iː"
+    ],
+    "u": [
+      "uː"
+    ],
+    "ɑ": [
+      "ɑːɹ",
+      "ɑː"
+    ],
+    "ɔ": [
+      "ɔːɹ",
+      "ɔː"
+    ],
+    "ə": [
+      "ɐ"
+    ],
+    "ɚ": [
+      "ɜː"
+    ],
+    "ʊ": [
+      "uː"
+    ],
+    "ʌ": [
+      "ɑː"
+    ]
+  },
+  "sin_red": {
+    "v1 gop_global": 0.25601208209991455,
+    "v2 gop": 0.4145207405090332,
+    "v2 lpp": 0.471555233001709
+  },
+  "resultados": {
+    "solo_identidad": {
+      "pearson_fonema": 0.06794311851263046,
+      "pearson_frase": 0.16187484564477655,
+      "acierto_2_peores": 0.2631693513278189,
+      "acierto_azar": 0.2042845765948272,
+      "pearson_fonema_validacion": 0.085663340985775
+    },
+    "v1": {
+      "pearson_fonema": 0.3556867837905884,
+      "pearson_frase": 0.6155539959994744,
+      "acierto_2_peores": 0.4281671745755333,
+      "acierto_azar": 0.2042845765948272,
+      "pearson_fonema_validacion": 0.4628598392009735
+    },
+    "v2": {
+      "pearson_fonema": 0.5922213792800903,
+      "pearson_frase": 0.6497497831503234,
+      "acierto_2_peores": 0.49259904222899437,
+      "acierto_azar": 0.2042845765948272,
+      "pearson_fonema_validacion": 0.6714744567871094
+    },
+    "v1+v2": {
+      "pearson_fonema": 0.5925548076629639,
+      "pearson_frase": 0.6758087734590633,
+      "acierto_2_peores": 0.5130605137135394,
+      "acierto_azar": 0.2042845765948272,
+      "pearson_fonema_validacion": 0.6907649636268616
+    }
+  }
+}

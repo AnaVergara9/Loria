@@ -46,8 +46,9 @@ SALUDO_CONVERSACION = {
 }
 
 
-def transcribir(ruta):
-    segmentos, info = modelo_whisper.transcribe(ruta)
+def transcribir(ruta, idioma=None):
+    """Texto de la nota de voz e idioma detectado. idioma=None: Whisper lo detecta solo; "en": se le dice que es inglés."""
+    segmentos, info = modelo_whisper.transcribe(ruta, language=idioma)
     texto = " ".join(s.text.strip() for s in segmentos)
     return texto, info.language
 
@@ -463,11 +464,12 @@ async def corregir_directo(update, context, user_id: int, texto: str):
     await decir(update, context, formatear_correccion(r), teclados.despues_de_corregir())
 
 
-async def turno_del_agente(update, context, usuario: dict, mensaje: str, ruta=None, transcripcion=None):
+async def turno_del_agente(update, context, usuario: dict, mensaje: str, ruta=None, transcripcion=None,
+                           transcripcion_ingles=None):
     """Un turno del agente ReAct, con la celebración de la mascota si el niño subió de nivel."""
     antes = foto_nivel(usuario["user_id"])
     respuesta, traza, usadas = await asyncio.to_thread(
-        agente.responder, usuario["user_id"], mensaje, usuario["perfil"], ruta, transcripcion
+        agente.responder, usuario["user_id"], mensaje, usuario["perfil"], ruta, transcripcion, transcripcion_ingles
     )
     await enviar_respuesta_agente(update, context, usuario, respuesta, traza, usadas)
     await celebrar(update, context, usuario, antes)
@@ -507,7 +509,7 @@ async def responder_voz(update: Update, context: ContextTypes.DEFAULT_TYPE):
         logging.info("VOZ: audio descargado")
         await context.bot.send_chat_action(update.effective_chat.id, "typing")
 
-        transcripcion = None
+        transcripcion = transcripcion_ingles = None
         if usuario["frase_objetivo"]:
             # Hay un ejercicio activo: el evaluador compara el audio con los fonemas de la frase objetivo.
             # Whisper también la transcribe, para revisar que sí haya leído esa frase.
@@ -515,8 +517,14 @@ async def responder_voz(update: Update, context: ContextTypes.DEFAULT_TYPE):
                          usuario["frase_objetivo"])
             await decir(update, context, "🎧 ¡Te estoy escuchando! Dame unos segundos..." if nino
                         else "🎧 Evaluando tu pronunciación, dame unos segundos...")
-            transcripcion, _idioma = await asyncio.to_thread(transcribir, ruta)
-            logging.info("VOZ: Whisper entendió: %s", transcripcion)
+            transcripcion, idioma_detectado = await asyncio.to_thread(transcribir, ruta)
+            logging.info("VOZ: Whisper entendió (%s): %s", idioma_detectado, transcripcion)
+            if idioma_detectado != "en":
+                # Con acento fuerte Whisper suele creer que es español y escribe otra cosa. La primera
+                # transcripción decide si leyó la frase (así se rechaza hablar en español); esta segunda,
+                # forzada a inglés, sirve para contar cuántas palabras se le entendieron.
+                transcripcion_ingles, _ = await asyncio.to_thread(transcribir, ruta, "en")
+                logging.info("VOZ: forzando inglés, Whisper entendió: %s", transcripcion_ingles)
             mensaje = (
                 f'[El estudiante envió una nota de voz para el ejercicio activo: '
                 f'"{usuario["frase_objetivo"]}". Evalúa su pronunciación.]'
@@ -538,7 +546,7 @@ async def responder_voz(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 return
             mensaje = texto
 
-        await turno_del_agente(update, context, usuario, mensaje, ruta, transcripcion)
+        await turno_del_agente(update, context, usuario, mensaje, ruta, transcripcion, transcripcion_ingles)
     except Exception as e:
         logging.exception("Error procesando audio")
         await decir(update, context, mensaje_error(e) or "Tuve un problema procesando tu nota de voz, intenta de nuevo.",

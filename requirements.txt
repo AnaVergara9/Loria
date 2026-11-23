@@ -1,5 +1,6 @@
 # Versiones fijas: son las probadas con Python 3.14 en Windows. Si se cambian, volver a probar
-# (python probar_modelos.py, python probar_mcp.py y python probar_pronunciacion.py).
+# (python scripts/probar_modelos.py, python scripts/probar_mcp.py y python scripts/probar_pronunciacion.py).
+# Para volver a entrenar el evaluador hace falta además lo que dice entrenamiento/README.md.
 python-telegram-bot==22.8
 python-dotenv==1.2.4
 faster-whisper==1.2.1
@@ -11,5 +12,3 @@ pydantic==2.14.3
 numpy==2.5.5
 torch==2.15.0
 transformers==5.23.0
-librosa==1.0.1
-soundfile==0.14.0

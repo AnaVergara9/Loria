@@ -61,7 +61,11 @@ def a_ipa(fonema_cmu: str) -> str:
 
 
 def fonemas_de(frase: str, dic: dict) -> tuple:
-    """Devuelve (fonemas, palabras_que_no_están_en_el_diccionario)."""
+    """Devuelve (fonemas, palabras_que_no_están_en_el_diccionario).
+
+    Las palabras se separan con " | " (por ejemplo "k æ n | j u"): así el evaluador puede decir
+    en qué palabra estuvo cada sonido débil. Las palabras son las de tutor/pronunciacion.palabras_de.
+    """
     palabras = re.findall(r"[a-z']+", frase.lower().replace("’", "'"))
     salida, faltan = [], []
     for p in palabras:
@@ -69,8 +73,8 @@ def fonemas_de(frase: str, dic: dict) -> tuple:
         if p not in dic:
             faltan.append(p)
             continue
-        salida.extend(a_ipa(f) for f in dic[p])
-    return " ".join(salida), faltan
+        salida.append(" ".join(a_ipa(f) for f in dic[p]))
+    return " | ".join(salida), faltan
 
 
 def guardar(datos: dict):

@@ -46,6 +46,7 @@ def ejecutar(nombre: str, args: dict, ctx: dict) -> tuple:
         "user_id": ctx["user_id"],
         "ruta_audio": ctx.get("ruta_audio"),
         "transcripcion": ctx.get("transcripcion"),
+        "transcripcion_ingles": ctx.get("transcripcion_ingles"),
         "tiempo_max": restante - 2,                 # la herramienta debe terminar antes que el turno
         "evitar_modelos": llm.modelos_en_pausa(),   # lo que el bot ya sabe que está caído
     }
@@ -190,7 +191,10 @@ Cómo responder al final (texto plano, sin Markdown, máximo 8 líneas):
   a lo que escribió) y explica el error en una frase. Si hay otras respuestas válidas, puedes mencionar una.
   Termina preguntándole si quiere otro ejercicio, sin escribirlo tú.
 - Después de evaluar_pronunciacion: comenta cómo le fue sin mostrar números ni símbolos fonéticos; si hay
-  "palabras_no_entendidas", dile cuáles palabras no se le entendieron para que las repase; explica máximo 2 sonidos con ejemplos cotidianos (por ejemplo, la 'th' de 'think' se hace sacando un poquito la punta de la lengua entre los dientes); si no hay sonidos débiles, felicítalo. Termina preguntándole si quiere otra frase, sin escribirla tú.
+  "palabras_no_entendidas", dile cuáles palabras no se le entendieron para que las repase; explica máximo 2 sonidos
+  de "peores_fonemas" con ejemplos cotidianos, nombrando la "palabra" donde estaba cada uno y, si hay "se_escucho",
+  a qué se pareció lo que dijo (por ejemplo: en 'think', la 'th' sonó como una 's'; se hace sacando un poquito la
+  punta de la lengua entre los dientes); si no hay sonidos débiles, felicítalo. Termina preguntándole si quiere otra frase, sin escribirla tú.
 - Si una herramienta devuelve un error, explícalo con sencillez y sugiere qué hacer.
 Nunca afirmes un puntaje ni una corrección que no vengan de una herramienta."""
 
@@ -275,14 +279,15 @@ def _ciclo(prov, modelo, sistema, mensajes, herramientas, ctx, traza, limite) ->
 
 
 def responder(user_id: int, mensaje: str, perfil: str = "adulto", ruta_audio: str | None = None,
-              transcripcion: str | None = None):
+              transcripcion: str | None = None, transcripcion_ingles: str | None = None):
     """Devuelve (texto_de_respuesta, traza, herramientas_usadas). La traza es la lista de acciones y
     observaciones; las herramientas usadas le sirven al bot para elegir los botones de seguimiento.
 
     Lanza llm.TodosFallaron si ningún modelo de la cadena pudo responder.
     """
     limite = time.time() + llm.TIEMPO_POR_TURNO  # presupuesto de tiempo para todo el turno
-    ctx = {"user_id": user_id, "ruta_audio": ruta_audio, "transcripcion": transcripcion, "limite": limite}
+    ctx = {"user_id": user_id, "ruta_audio": ruta_audio, "transcripcion": transcripcion,
+           "transcripcion_ingles": transcripcion_ingles, "limite": limite}
     msg_usuario = {"rol": "usuario", "texto": mensaje}
     base = list(historial[user_id]) + [msg_usuario]
     # El nivel lo consulta el bot (no el modelo) para adaptar las instrucciones de este turno.

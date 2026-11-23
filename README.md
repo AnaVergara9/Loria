@@ -179,9 +179,11 @@ El banco está en `datos/ejercicios.json` y se puede ampliar sin tocar código. 
 
 - **Completar** (🎯 Ejercicios → ✏️ Escribir, o "dame un ejercicio"): una frase con un espacio `___`. Se acepta la palabra sola o la frase completa, sin importar mayúsculas ni puntuación. Si solo falla una tilde, cuenta como correcta, pero se le muestra como error de ortografía.
 - **Traducir**: una frase en español. Si la respuesta coincide con una de las traducciones de referencia, se revisa sin gastar el modelo de lenguaje. Si es distinta (por ejemplo, "I've got two brothers" en lugar de "I have two brothers"), la juzga el modelo de lenguaje, porque una traducción puede estar bien de muchas formas.
-- **Pronunciación** (🎯 Ejercicios → 🎙 Pronunciación): solo en inglés. En francés no hay evaluación de pronunciación porque no existen suficientes corpus públicos para entrenar un evaluador confiable. Los niños solo tienen ejercicios en inglés. Cada nota de voz pasa por dos revisiones:
+- **Pronunciación** (🎯 Ejercicios → 🎙 Pronunciación): solo en inglés. En francés no hay evaluación de pronunciación porque no existen suficientes corpus públicos para entrenar un evaluador confiable. Los niños solo tienen ejercicios en inglés. Cada nota de voz pasa por tres revisiones:
   1. **¿Leyó la frase del ejercicio?** Whisper transcribe la nota de voz y se compara letra por letra con la frase. Si el parecido es menor que 0,45, no se califica y se le pide leer la frase. Con ese límite, las frases mal pronunciadas ("I sink de wedder is nais") dan 0,56 o más, y las frases distintas o en español dan 0,35 o menos.
   2. **¿Qué tan bien la pronunció?** El evaluador entrenado (wav2vec2 + BiLSTM) da el puntaje. Si Whisper no reconoció varias palabras de la frase, el puntaje tiene un tope: 4 + 6 × (fracción de palabras entendidas). Así, una frase que casi no se entiende no puede sacar 9, y Loria le dice cuáles palabras no se entendieron.
+     - **Con acento fuerte, Whisper suele creer que el audio está en español** y escribe otra cosa: con una voz española leyendo "Where is the bus station?" escribió "¿Cuál es de bustesian?". Por eso, si no detecta inglés, el bot transcribe una segunda vez forzando inglés, y las palabras entendidas se cuentan con esa versión. La revisión 1 sigue usando la primera transcripción: forzar inglés siempre no sirve, porque Whisper *traduce* lo que se dice en español ("Hola, ¿dónde queda la estación de buses?" salía como "Hello, where is the bus station?") y lo daría por leído.
+  3. **¿Qué sonidos fallaron?** El evaluador ubica en el audio el tramo donde se dijo cada fonema (alineación forzada) y mira qué sonido se oyó ahí. Loria explica hasta 2 sonidos débiles, con su palabra y a qué sonaron: "en *bus*, la *s* sonó como una *l*". Cómo se entrenó y cuánto acierta: [entrenamiento/README.md](entrenamiento/README.md).
 - **El ejercicio que ve el estudiante lo escribe el código, no el modelo de lenguaje.** Se copia de lo que devolvió la herramienta, así que siempre es el mismo que se va a revisar. Si el modelo escribe un ejercicio propio (una línea con `___`), el bot lo quita y lo cambia por uno real del banco. Mientras hay un ejercicio de texto activo, el bot no deja usar `corregir_gramatica`, para que la respuesta no se guarde dos veces en el progreso.
 - Si el estudiante dice "no sé", Loria le muestra la respuesta (cuenta como no acertada). Con `/cancelar` o "ya no quiero" se cierra el ejercicio.
 
@@ -192,7 +194,7 @@ python scripts/generar_fonemas.py         # busca cada palabra en el diccionario
 python scripts/probar_pronunciacion.py    # comprueba que todos los fonemas existan en el modelo wav2vec2
 ```
 
-El diccionario CMU (inglés americano, público) se descarga solo la primera vez. Si una palabra no está en el diccionario (por ejemplo, un nombre propio), el script avisa para que la cambies.
+Los fonemas quedan separados por palabra con " | " (por ejemplo `w ɛ ɹ | ɪ z`), para que el evaluador sepa en qué palabra está cada sonido. El diccionario CMU (inglés americano, público) se descarga solo la primera vez. Si una palabra no está en el diccionario (por ejemplo, un nombre propio), el script avisa para que la cambies.
 
 ## Modo niños
 
@@ -235,7 +237,7 @@ Parley/
 ├── tutor/               lógica de aprendizaje: ejercicios, nivel, pronunciación, base de datos
 ├── datos/               archivos que no son código (banco, modelo entrenado, base de datos)
 ├── scripts/             utilidades que se corren a mano (pruebas y generar fonemas)
-└── entrenamiento/       cuaderno de Colab con el que se entrenó el evaluador
+└── entrenamiento/       cómo se entrenó el evaluador de pronunciación (script y resultados)
 ```
 
 | Archivo | Responsabilidad |
@@ -250,18 +252,33 @@ Parley/
 | `modelos_lenguaje/llm_gemini.py`, `llm_groq.py` | Adaptadores: traducen el formato común al de cada proveedor. |
 | `tutor/progreso.py` | Reglas de nivel (A1 a C1) y resumen del progreso. |
 | `tutor/ejercicios.py` | Banco de ejercicios: cuál proponer a cada estudiante y cómo revisar su respuesta. |
-| `tutor/pronunciacion.py` | Evaluador de pronunciación (wav2vec2 + red BiLSTM entrenada). |
+| `tutor/pronunciacion.py` | Evaluador de pronunciación (wav2vec2 + red BiLSTM entrenada): puntajes y sonidos débiles. |
+| `tutor/rasgos_pronunciacion.py` | Alineación forzada y características de cada fonema (las usan el bot y el entrenamiento). |
 | `tutor/db.py` | Base de datos SQLite: usuarios, nivel por idioma e intentos. |
 | `datos/ejercicios.json` | Las frases y ejercicios (se pueden agregar sin tocar código). |
-| `datos/evaluador_pronunciacion.pt`, `normalizacion.npz` | La red entrenada del evaluador y su normalización. |
-| `datos/parley.db`, `datos/audios/`, `datos/cmudict.dict` | Se crean solos al usar el bot; no se suben a GitHub (datos personales y una descarga). |
+| `datos/evaluador_pronunciacion.pt` | La red entrenada del evaluador (trae adentro su normalización y variantes). || `datos/parley.db`, `datos/audios/`, `datos/cmudict.dict` | Se crean solos al usar el bot; no se suben a GitHub (datos personales y una descarga). |
 | `scripts/probar_modelos.py` | Prueba cada modelo de la cadena de respaldo y la cadena completa. |
 | `scripts/probar_mcp.py` | Lanza el servidor MCP sin Telegram y llama algunas herramientas. |
 | `scripts/probar_pronunciacion.py` | Revisa los fonemas del banco y evalúa un audio de prueba. |
 | `scripts/generar_fonemas.py` | Escribe los fonemas de las frases nuevas de pronunciación (diccionario CMU). |
-| `entrenamiento/` | Cuaderno de Colab con el que se entrenó el evaluador, y su explicación (datos speechocean762, métricas). |
-
+| `entrenamiento/entrenar_evaluador.py` | Entrena el evaluador actual (en Colab o en el computador) y compara versiones. |
+| `entrenamiento/resultados_etapa8.json` | Los números de ese entrenamiento (variantes, Pearson, épocas). |
 Los scripts se ejecutan desde la carpeta del proyecto, por ejemplo `python scripts/probar_mcp.py`.
+
+## Límites conocidos
+
+- **Cuotas gratuitas.** Gemini da 20 peticiones por día por modelo, y cada mensaje usa de 2 a 4. En la práctica, después de unos 15 a 30 mensajes al día responde Groq. Una ráfaga de mensajes puede saturar también a Groq; a ritmo normal de un usuario no pasó.
+- **Fallos de los modelos con herramientas.** `gpt-oss` en Groq a veces escribe mal la llamada a una herramienta. El bot lo reintenta con el siguiente modelo.
+- **El nivel lo estima el modelo de lenguaje.** El nivel de cada frase no sale de un examen oficial y puede variar un poco entre modelos. Las reglas para subir o bajar sí son fijas y están en código.
+- **Memoria corta.** La memoria de la conversación (últimos 8 mensajes) se pierde al reiniciar el bot. El nivel y el progreso sí quedan guardados.
+- **Pronunciación:**
+  - es solo en inglés y compara contra el inglés americano del diccionario CMU;
+  - se entrenó con hablantes de chino mandarín (speechocean762), no de español;
+  - "qué se oyó" es una pista, no un diagnóstico exacto;
+  - acierta cerca de la mitad de las veces al señalar los 2 sonidos peores (ver [entrenamiento/README.md](entrenamiento/README.md));
+  - con acento fuerte, el parecido que mide Whisper queda cerca del límite de 0,45 (una voz española leyendo bien dio 0,50), así que una lectura con mucho acento podría rechazarse como "no es la frase".
+- **Pruebas.** Las pruebas automáticas usan modelos simulados, audios sintéticos de Windows y el servidor MCP real. Las pruebas con personas fueron manuales, de la autora, en Telegram. No hay pruebas con estudiantes reales.
+- **Un solo proceso.** Solo una persona puede correr el bot a la vez con el mismo token.
 
 ## Problemas comunes
 

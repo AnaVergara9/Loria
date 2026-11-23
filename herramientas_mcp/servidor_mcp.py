@@ -203,6 +203,8 @@ async def evaluar_pronunciacion(
     user_id: UsuarioId,
     ruta_audio: Annotated[str, Field(description="Ruta de la nota de voz (la llena el bot).")],
     transcripcion: Annotated[str | None, Field(description="Lo que entendió Whisper (lo llena el bot).")] = None,
+    transcripcion_ingles: Annotated[str | None, Field(
+        description="Lo que entendió Whisper forzado a inglés, si creyó que era otro idioma (lo llena el bot).")] = None,
 ) -> dict:
     """Evalúa la nota de voz del estudiante contra el ejercicio activo y devuelve un puntaje de la
     frase (0 a 10), los sonidos más débiles y las palabras que no se le entendieron. Úsala solo si
@@ -223,7 +225,13 @@ async def evaluar_pronunciacion(
                              f'Pídele que lea en voz alta exactamente: "{frase}". (No se calificó.)'}
 
         # 2) Evaluador entrenado (wav2vec2 + BiLSTM) contra los fonemas de la frase.
-        res = evaluar_audio(ruta_audio, u["fonemas_objetivo"])
+        res = evaluar_audio(ruta_audio, u["fonemas_objetivo"], frase=frase)
+        if c and transcripcion_ingles:
+            # Whisper creyó que era otro idioma (pasa con acento fuerte): las palabras entendidas se
+            # cuentan con la transcripción forzada a inglés, si salió mejor. Así el acento no se castiga dos veces.
+            c_ingles = ejercicios.coincidencia(transcripcion_ingles, frase)
+            if c_ingles["entendidas"] > c["entendidas"]:
+                c = c_ingles
         if c:
             # Si Whisper no reconoció muchas palabras, el puntaje no puede ser alto:
             # tope de 4 (no entendió ninguna) a 10 (entendió todas).
